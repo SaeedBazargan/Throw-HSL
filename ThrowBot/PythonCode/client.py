@@ -27,8 +27,15 @@ class CameraClient:
                 print("Error: Could not read frame.")
                 continue
 
-            # Serialize the frame
-            data = pickle.dumps(frame)
+            # Compress the frame using JPEG
+            result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])  # Adjust quality as needed
+            if not result:
+                print("Error: Could not encode frame.")
+                continue
+
+            # Serialize the encoded frame
+            data = pickle.dumps(encoded_frame)
+            print(f"Sending frame size: {len(data)} bytes")
             # Send frame size first
             conn.sendall(struct.pack("L", len(data)))
             # Send frame data
