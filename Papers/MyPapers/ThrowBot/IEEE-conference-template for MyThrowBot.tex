@@ -13,49 +13,42 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Conference Paper Title*\\
-{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured for https://ieeexplore.ieee.org  and
-should not be used}
-\thanks{Identify applicable funding agency here. If none, delete this.}
-}
+\title{HSL-Throw: The Hand-Launchable Two-Wheeled Rescue Robot\\}
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\author{\IEEEauthorblockN{1\textsuperscript{st} Saeed Bazargan}
+\IEEEauthorblockA{\textit{Dept. of Computer and Electrical Engineering} \\
+\textit{Qazvin Islamic Azad University, Mechatronics Research Lab}\\
+Qazvin, Iran \\
+0009-0002-9326-4760}
 \and
-\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\IEEEauthorblockN{2\textsuperscript{nd} Mohammad Norouzi}
+\IEEEauthorblockA{\textit{Dept. of Computer and Electrical Engineering} \\
+\textit{Qazvin Islamic Azad University, Mechatronics Research Lab}\\
+Qazvin, Iran \\
+0000-0002-9222-1358}
 }
 
 \maketitle
 
 \begin{abstract}
-The requirements of robotic systems for search and rescue operations vary depending on the situation. While several systems have been developed to address these needs, there remains a demand for a general-purpose rescue robot. In this paper, we introduce the electronic and hardware design of a mobile robot platform that is small, low-cost, and equipped with diverse sensors, making it easily portable. The goal of this project is to develop a platform for rescue, research, and educational purposes that can semi-autonomously assist rescue teams or even students by utilizing object detection capabilities. We propose a real-time object detection model based on the Tiny-YOLO deep learning framework to achieve this. This platform balances capabilities, accessibility, cost, and open design, offering an open-source software development kit (SDK). The electronic structures, including sensors, motor drivers, and device communication management (DCM), are designed based on a 32-bit ARM microcontroller running under the FreeRTOS with task scheduling. Additionally, an RPI Zero 2W board is used for wireless communication, image processing, and ambient sound detection.
-Manual deployment of robots in rescue situations can be challenging due to human visual errors. This paper discusses the integration of this robot with artificial intelligence, which is currently being developed by the MRL Robotics Research Lab.
+The requirements of robotic systems for search and rescue operations vary depending on the situation. While several systems have been developed to address these needs, there remains a demand for a general-purpose rescue robot. In this paper, we introduce the electronic and hardware design of a mobile robot platform that is small, low-cost, and equipped with diverse sensors, making it easily portable. The goal of this project is to develop a platform for rescue, research, or educational purposes that can semi-autonomously assist rescue teams or even students by utilizing object detection capabilities. We propose a real-time object detection model based on the Tiny-YOLO deep learning framework to achieve this. This platform balances capabilities, accessibility, cost, and open design, offering an open-source software development kit (SDK). The electronic structures, including sensors, motor drivers, and device communication management (DCM), are designed based on a 32-bit ARM microcontroller running under the FreeRTOS with task scheduling. Additionally, an RPI Zero 2W board is used for wireless communication, image processing, and ambient sound detection.
+Manual deployment of robots in rescue situations can be challenging due to human visual errors. This paper discusses the integration of this robot with artificial intelligence, which is currently being developed by the MRL Robotics Research Lab.\\
 \end{abstract}
 
 \begin{IEEEkeywords}
-component, formatting, style, styling, insert.
+Rescue Robots, Mobile Robot Platform, Human-Robot Interaction, Tiny-YOLO, FreeRTOS, ARM Microcontroller.
 \end{IEEEkeywords}
 
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. For more information about how to become an IEEE Conference author or how to write your paper, please visit   IEEE Conference Author Center website: https://conferences.ieeeauthorcenter.ieee.org/.
+Rescue robots are highly attractive for search and rescue operations due to their ability to navigate through rubble or hazardous areas. Compared to dogs or human workers, these robots are more expendable, making them ideal for initial reconnaissance in dangerous areas. Experiences from rescue operations, as well as those involving robots, have highlighted several challenges and limitations of the current systems. The main challenge in urban search and rescue operations lies in the unpredictable and highly variable nature of disaster environments. Although numerous solutions have been proposed and developed in the past, none have proven to be both affordable and reliable enough to be widely adopted in all areas of rescue operations.
+In recent years, significant progress has been made in object detection, especially with the promotion of deep convolutional neural networks (CNN). One of the most important frameworks in this regard is Tiny-YOLO, a lightweight version of the YOLO (You Only Look Once) object detection model. Tiny-YOLO, due to its simpler structure and efficient use of resources, is particularly suitable for robots with limited computational power, such as rescue robots. Tiny-YOLO works by dividing the input image into a grid of cells, predicting both the location and category of objects simultaneously in real-time. This allows robots to detect humans or other objects under rubble or in complex environments, even in low-light conditions or when parts of the body are obscured.
+In this paper, we review past incidents where rescue robots were deployed and examine the challenges encountered in identifying trapped individuals or objects in such complex environments. We also discuss the benefits of leveraging deep learning models like Tiny-YOLO to enhance the detection capabilities of rescue robots. This paper introduces the rescue robot platform HSL and also reviews similar systems such as Recon Scout and IRobot FirstLook. In the following sections, we will further explore the performance and capabilities of existing rescue robot platforms ``Fig.~\ref{fig}''. Finally, we will provide an overview of the HSL robot system and explain how Tiny-YOLO is integrated for object detection.
 
-\subsection{Maintaining the Integrity of the Specifications}
-
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+\begin{figure}[htbp]
+\centerline{\includegraphics{fig1.png}}
+\caption{Example of a figure caption.}
+\label{fig}
+\end{figure}
 
 \section{Prepare Your Paper Before Styling}
 Before you begin to format your paper, first write and save the content as a 
@@ -203,11 +196,11 @@ copy& More table copy$^{\mathrm{a}}$& &  \\
 \end{center}
 \end{table}
 
-% \begin{figure}[htbp]
-% \centerline{\includegraphics{}}
-% \caption{Example of a figure caption.}
-% \label{fig}
-% \end{figure}
+\begin{figure}[htbp]
+\centerline{\includegraphics{fig1.png}}
+\caption{Example of a figure caption.}
+\label{fig}
+\end{figure}
 
 Figure Labels: Use 8 point Times New Roman for Figure labels. Use words 
 rather than symbols or abbreviations when writing Figure axis labels to 
