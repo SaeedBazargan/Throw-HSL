@@ -1,46 +1,58 @@
 import cv2
 import socket
-import struct
+import threading
 import pickle
+import struct
 
-# Set up the server address and port
-SERVER_IP = '192.168.1.4'  # Replace with the server's IP address
-SERVER_PORT = 5000
+class CameraClient:
+    def __init__(self, server_ip, server_port, camera_index=0):
+        self.server_ip = server_ip
+        self.server_port = server_port
+        self.camera_index = camera_index
+        self.camera = cv2.VideoCapture(self.camera_index, cv2.CAP_DSHOW)
+        self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        self.running = True
 
-# Create a TCP socket
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    def open(self):
+        if not self.camera.isOpened():
+            print("Error: Could not open camera.")
+            return False
+        return True
 
-# Connect to the server
-client_socket.connect((SERVER_IP, SERVER_PORT))
+    def send_frame(self, conn):
+        while self.running:
+            ret, frame = self.camera.read()
+            if not ret:
+                print("Error: Could not read frame.")
+                continue
 
-# Open the camera
-cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
-cap.set(cv2.CAP_PROP_FPS, 15)
+            # Serialize the frame
+            data = pickle.dumps(frame)
+            # Send frame size first
+            conn.sendall(struct.pack("L", len(data)))
+            # Send frame data
+            conn.sendall(data)
 
-try:
-    while True:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
-        if not ret:
-            break
+    def start(self):
+        # Connect to the server
+        conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        conn.connect((self.server_ip, self.server_port))
         
-        # Serialize the frame using pickle
-        data = pickle.dumps(frame)
-        
-        # Send the length of the serialized frame first
-        client_socket.sendall(struct.pack("L", len(data)) + data)
+        # Start sending frames in a separate thread
+        self.send_thread = threading.Thread(target=self.send_frame, args=(conn,))
+        self.send_thread.start()
 
-        # Optional: Display the captured frame locally (for debugging)
-        cv2.imshow('Client Video', frame)
-        
-        # Exit if 'q' is pressed
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        # Wait for the sending thread to finish
+        self.send_thread.join()
 
-finally:
-    # Release the camera and close the socket
-    cap.release()
-    client_socket.close()
-    cv2.destroyAllWindows()
+        conn.close()
+        self.camera.release()
+
+if __name__ == "__main__":
+    server_ip = '192.168.1.4'  # Change to your server's IP address
+    server_port = 8000          # Change to your server's port
+    client = CameraClient(server_ip, server_port)
+
+    if client.open():
+        client.start()
