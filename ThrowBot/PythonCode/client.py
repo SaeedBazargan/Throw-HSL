@@ -28,21 +28,19 @@ class CameraClient:
                 print("Error: Could not read frame.")
                 continue
 
-            # Compress the frame using JPEG
-            result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])  # Adjust quality as needed
+            result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])  # Compress the frame using JPEG and Adjust quality as needed
             if not result:
                 print("Error: Could not encode frame.")
                 continue
 
-            data = pickle.dumps(encoded_frame)                  # Serialize the encoded frame
-            print(f"Sending frame size: {len(data)} bytes")
-            conn.sendall(struct.pack("L", len(data)))           # Send frame size first
-            conn.sendall(data)                                  # Send frame data
+            data = pickle.dumps(encoded_frame)                                                      # Serialize the encoded frame
+            print(f"Sending frame size: {len(data)} bytes")                                 
+            conn.sendall(struct.pack("L", len(data)))                                               # Send frame size first
+            conn.sendall(data)                                                                      # Send frame data
 
     def start(self):
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)                                    # Connect to the server
         conn.connect((self.server_ip, self.server_port))
-        
         self.send_thread = threading.Thread(target=self.send_frame, args=(conn,))                   # Start sending frames in a separate thread
         self.send_thread.start()
         self.send_thread.join()                                                                     # Wait for the sending thread to finish
@@ -51,7 +49,7 @@ class CameraClient:
         self.camera.release()
 
 if __name__ == "__main__":
-    server_ip = '192.168.1.4'  # Change to your server's IP address
+    server_ip = '192.168.60.181'  # Change to your server's IP address
     server_port = 8000          # Change to your server's port
     client = CameraClient(server_ip, server_port)
 

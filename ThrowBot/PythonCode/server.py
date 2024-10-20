@@ -14,6 +14,10 @@ class CameraServer:
         self.lock = threading.Lock()
         self.running = True
 
+        hostname = socket.gethostname()                                 # Get the server IP address
+        server_ip = socket.gethostbyname(hostname)
+        print(f"Server IP Address: {server_ip}")
+
     def display_frame(self):
         while self.running:
             if self.frame is not None:
@@ -28,7 +32,6 @@ class CameraServer:
     def start(self):
         conn, addr = self.server_socket.accept()
         print(f'Connection from {addr}')
-
         while True:
             frame_size_data = conn.recv(struct.calcsize("L"))           # Receive frame size first
             if not frame_size_data:
@@ -43,7 +46,6 @@ class CameraServer:
             
             encoded_frame = pickle.loads(frame_data)                    # Deserialize the frame
             frame = cv2.imdecode(encoded_frame, cv2.IMREAD_COLOR)       # Decode the JPEG frame
-
             with self.lock:
                 self.frame = frame                                      # Store the frame in a thread-safe manner
 
