@@ -20,8 +20,7 @@ class CameraServer:
                 with self.lock:
                     cv2.imshow('Received Camera Stream', self.frame)
 
-            # Break the loop if the 'q' key is pressed
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            if cv2.waitKey(1) & 0xFF == ord('q'):                       # Break the loop if the 'q' key is pressed
                 self.running = False
 
         cv2.destroyAllWindows()
@@ -31,37 +30,30 @@ class CameraServer:
         print(f'Connection from {addr}')
 
         while True:
-            # Receive frame size first
-            frame_size_data = conn.recv(struct.calcsize("L"))
+            frame_size_data = conn.recv(struct.calcsize("L"))           # Receive frame size first
             if not frame_size_data:
                 break
             
             frame_size = struct.unpack("L", frame_size_data)[0]
             print(f"Received frame size: {frame_size} bytes")
             
-            # Now receive the frame data
-            frame_data = b''
+            frame_data = b''                                            # Now receive the frame data
             while len(frame_data) < frame_size:
                 frame_data += conn.recv(4096)
             
-            # Deserialize the frame
-            encoded_frame = pickle.loads(frame_data)
-            frame = cv2.imdecode(encoded_frame, cv2.IMREAD_COLOR)  # Decode the JPEG frame
+            encoded_frame = pickle.loads(frame_data)                    # Deserialize the frame
+            frame = cv2.imdecode(encoded_frame, cv2.IMREAD_COLOR)       # Decode the JPEG frame
 
             with self.lock:
-                self.frame = frame  # Store the frame in a thread-safe manner
+                self.frame = frame                                      # Store the frame in a thread-safe manner
 
         conn.close()
         self.server_socket.close()
 
 if __name__ == "__main__":
-    server = CameraServer()
-    
-    # Start the display thread
-    display_thread = threading.Thread(target=server.display_frame)
+    camServer = CameraServer()
+    display_thread = threading.Thread(target=camServer.display_frame)   # Start the display thread
     display_thread.start()
     
-    server.start()
-    
-    # Wait for the display thread to finish before exiting
-    display_thread.join()
+    camServer.start()
+    display_thread.join()                                               # Wait for the display thread to finish before exiting

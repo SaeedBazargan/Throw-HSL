@@ -12,6 +12,7 @@ class CameraClient:
         self.camera = cv2.VideoCapture(self.camera_index, cv2.CAP_DSHOW)
         self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
         self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        self.camera.set(cv2.CAP_PROP_FPS, 15)
         self.running = True
 
     def open(self):
@@ -33,25 +34,18 @@ class CameraClient:
                 print("Error: Could not encode frame.")
                 continue
 
-            # Serialize the encoded frame
-            data = pickle.dumps(encoded_frame)
+            data = pickle.dumps(encoded_frame)                  # Serialize the encoded frame
             print(f"Sending frame size: {len(data)} bytes")
-            # Send frame size first
-            conn.sendall(struct.pack("L", len(data)))
-            # Send frame data
-            conn.sendall(data)
+            conn.sendall(struct.pack("L", len(data)))           # Send frame size first
+            conn.sendall(data)                                  # Send frame data
 
     def start(self):
-        # Connect to the server
-        conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)                                    # Connect to the server
         conn.connect((self.server_ip, self.server_port))
         
-        # Start sending frames in a separate thread
-        self.send_thread = threading.Thread(target=self.send_frame, args=(conn,))
+        self.send_thread = threading.Thread(target=self.send_frame, args=(conn,))                   # Start sending frames in a separate thread
         self.send_thread.start()
-
-        # Wait for the sending thread to finish
-        self.send_thread.join()
+        self.send_thread.join()                                                                     # Wait for the sending thread to finish
 
         conn.close()
         self.camera.release()
