@@ -3,17 +3,24 @@ import cv2
 import pickle
 import struct
 import threading
+import pyaudio
 
 class CameraServer:
-    def __init__(self, host='0.0.0.0', port=8000):
+    def __init__(self, host='0.0.0.0', port=8000, audio_port=8001):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.bind((host, port))
         self.server_socket.listen(1)
         print(f'Server listening on {host}:{port}')
+        self.audio_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.audio_socket.bind((host, audio_port))
+        self.audio_socket.listen(1)
+        print(f'Audio server listening on {host}:{audio_port}')
+        
         self.frame = None
         self.lock = threading.Lock()
         self.running = True
         self.conn = None
+        self.audio_conn = None
 
         # Get the server IP address
         hostname = socket.gethostname()
@@ -32,15 +39,48 @@ class CameraServer:
                 self.running = False
 
             if key == ord('c'):
-                data = pickle.dumps('c')                                 # Serialize 'c' message
-                self.conn.sendall(struct.pack("L", len(data)))           # Send string length first
-                self.conn.sendall(data)                                  # Send the string data
+                data = pickle.dumps('c')
+                self.conn.sendall(struct.pack("L", len(data)))
+                self.conn.sendall(data)
+            
+            if key == ord('a'):
+                data = pickle.dumps('a')
+                self.conn.sendall(struct.pack("L", len(data)))
+                self.conn.sendall(data)
 
         cv2.destroyAllWindows()
+
+    def start_audio_stream(self):
+        self.audio_conn, addr = self.audio_socket.accept()
+        print(f'Audio connection from {addr}')
+        p = pyaudio.PyAudio()
+
+        stream = p.open(format=pyaudio.paInt16,
+                        channels=1,
+                        rate=44100,
+                        output=True)
+
+        while self.running:
+            try:
+                data = self.audio_conn.recv(1024)
+                if not data:
+                    break
+                stream.write(data)
+            except Exception as e:
+                print(f"Error receiving audio: {e}")
+                break
+
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
+        self.audio_conn.close()
 
     def start(self):
         self.conn, addr = self.server_socket.accept()
         print(f'Connection from {addr}')
+
+        audio_thread = threading.Thread(target=self.start_audio_stream)
+        audio_thread.start()
 
         while self.running:
             try:
@@ -69,17 +109,19 @@ class CameraServer:
         self.running = False
         if self.conn:
             self.conn.close()
+        if self.audio_conn:
+            self.audio_conn.close()
         self.server_socket.close()
+        self.audio_socket.close()
 
 if __name__ == "__main__":
     camServer = CameraServer()
 
-    # Start the display thread
     display_thread = threading.Thread(target=camServer.display_frame)
     display_thread.start()
 
     try:
         camServer.start()
     finally:
-        camServer.stop()  # Ensure server stops correctly
+        camServer.stop()
         display_thread.join()
