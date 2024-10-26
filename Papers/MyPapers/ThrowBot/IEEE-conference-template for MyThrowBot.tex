@@ -30,34 +30,30 @@ mh.norouzi@gmail.com}
 \maketitle
 
 \begin{abstract}
-The requirements of robotic systems for search and rescue operations vary depending on the situation. While several systems have been developed to address these needs, there remains a demand for a general-purpose rescue robot. In this paper, we introduce the electronic and hardware design of a mobile robot platform that is small, low-cost, and equipped with diverse sensors, making it easily portable. The goal of this project is to develop a platform for rescue, research, or educational purposes that can semi-autonomously assist rescue teams or even students by utilizing object detection capabilities. We propose a real-time object detection model based on the Tiny-YOLO deep learning framework to achieve this. This platform balances capabilities, accessibility, cost, and open design, offering an open-source software development kit (SDK). The electronic structures, including sensors, motor drivers, and device communication management (DCM), are designed based on a 32-bit ARM microcontroller running under the FreeRTOS with task scheduling. Additionally, an RPI Zero 2W board is used for wireless communication, image processing, and ambient sound detection.
-Manual deployment of robots in rescue situations can be challenging due to human visual errors. This paper discusses the integration of this robot with artificial intelligence, which is currently being developed by the MRL Robotics Research Lab.\\
+The development of versatile and cost-effective rescue robots is essential for enhancing safety and efficiency in hazardous environments where human intervention is limited. In response to this need, a compact and affordable mobile robot platform has been designed, equipped with various sensors for easy transport and deployment. This platform aims to support rescue missions, research, and educational purposes, offering semi-autonomous assistance through advanced object detection capabilities. A key feature of this design is the ability to stream the camera feed from the robot to an external laptop, where object detection is executed using the YOLOdotnet framework integrated with a custom GUI. This approach improves processing speed and reduces battery consumption by offloading computationally intensive tasks. Emphasizing functionality, accessibility, cost-effectiveness, and open-source architecture, the platform includes a comprehensive SDK. The electronic system utilizes a 32-bit ARM microcontroller running FreeRTOS with task scheduling, while the Raspberry Pi Zero 2W facilitates wireless communication and ambient sound detection. This paper discusses the integration of artificial intelligence into the robot, which is currently being developed by the MRL Mechatronics Research Lab.\\
 \end{abstract}
 
 \begin{IEEEkeywords}
-Rescue Robots, Mobile Robot Platform, Human-Robot Interaction, Tiny-YOLO, FreeRTOS, ARM Microcontroller.
+Rescue Robots, Mobile Robot Platform, Human-Robot Interaction, YOLODotNet, FreeRTOS, ARM Microcontroller.
 \end{IEEEkeywords}
 
 \section{Introduction}
-Rescue robots are highly attractive for search and rescue operations due to their ability to navigate through rubble or hazardous areas. Compared to dogs or human workers, these robots are more expendable, making them ideal for initial reconnaissance in dangerous areas. Experiences from rescue operations, as well as those involving robots, have highlighted several challenges and limitations of the current systems. The main challenge in urban search and rescue operations lies in the unpredictable and highly variable nature of disaster environments. Although numerous solutions have been proposed and developed in the past, none have proven to be both affordable and reliable enough to be widely adopted in all areas of rescue operations.
-In recent years, significant progress has been made in object detection, especially with the promotion of deep convolutional neural networks (CNN). One of the most important frameworks in this regard is Tiny-YOLO, a lightweight version of the YOLO (You Only Look Once) object detection model. Tiny-YOLO, due to its simpler structure and efficient use of resources, is particularly suitable for robots with limited computational power, such as rescue robots. Tiny-YOLO works by dividing the input image into a grid of cells, predicting both the location and category of objects simultaneously in real-time. This allows robots to detect humans or other objects under rubble or in complex environments, even in low-light conditions or when parts of the body are obscured.
-In this paper, we review past incidents where rescue robots were deployed and examine the challenges encountered in identifying trapped individuals or objects in such complex environments. We also discuss the benefits of leveraging deep learning models like Tiny-YOLO to enhance the detection capabilities of rescue robots. This paper introduces the rescue robot platform HSL and also reviews similar systems such as Recon Scout and IRobot FirstLook. In the following sections, we will further explore the performance and capabilities of existing rescue robot platforms ``Fig.~\ref{fig}''. Finally, we will provide an overview of the HSL robot system and explain how Tiny-YOLO is integrated for object detection.
+Rescue robots are increasingly valuable for search and rescue operations because they can navigate through rubble and hazardous environments. Unlike dogs or human workers, these robots are expendable, making them ideal for initial assessment in dangerous areas. Experiences from past rescue missions have revealed several challenges and limitations inherent in current systems. A primary challenge in urban search and rescue operations is the unpredictable nature and high variability of disaster environments. Despite numerous proposed solutions, none have demonstrated the affordability and reliability necessary for widespread adoption in various rescue scenarios. In recent years, significant advancements have been made in object detection, particularly with the development of deep convolutional neural networks (CNNs). A notable framework in this domain is YOLO (You Only Look Once), which excels in real-time processing. In this study, we do not perform YOLO processing on the Raspberry Pi; instead, the camera feed is streamed to an external laptop. A custom GUI written in C\# utilizes the YOLOdotnet framework to enhance processing speed and reduce battery consumption for the robot. By offloading the computationally intensive tasks to the laptop, the robot can operate more efficiently while maintaining effective object detection capabilities. This paper reviews past incidents involving the deployment of rescue robots, examining the challenges faced in identifying trapped individuals or objects within complex settings. We discuss the advantages of leveraging deep learning models like YOLOdotnet to enhance the detection capabilities of rescue robots. Additionally, we introduce the rescue robot platform HSL and review similar systems, such as Recon Scout and iRobot FirstLook. The following sections will further explore the performance and capabilities of existing rescue robot platforms (as shown in Figure.~\ref{fig_First}). Finally, we will provide an overview of the HSL robot system and explain how YOLOdotnet is integrated for object detection.
 
 \begin{figure}[htbp]
-\centerline{\includegraphics{Fig_T1.png}}
-\caption{Example of a figure caption.}
-\label{fig_t1}
+\centerline{\includegraphics[width=0.5\textwidth]{Fig_First.PNG}}
+\caption{HSL-Throw robot CAD view.}
+\label{fig_First}
 \end{figure}
 
-\section{Prepare Your Paper Before Styling}
-Before you begin to format your paper, first write and save the content as a 
-separate text file. Complete all content and organizational editing before 
-formatting. Please note sections \ref{AA} to \ref{FAT} below for more information on 
-proofreading, spelling and grammar.
+\section{Existing Rescue Mobile Robot Platforms}
+The system described in this paper aims to meet the needs of a portable and deployable rescue robot. In recent decades, numerous platforms for mobile rescue robots have emerged. This indicates that rescue and recovery platforms are among the most important requirements for creating genuine interaction between artificial intelligence and the environment. Our goal is to design and develop a platform that is suitable for simple research, education, and enhancement. A powerful hardware setup equipped with various sensors and a modular structure with programmable capabilities is essential for these objectives; these features allow researchers to utilize the platform in rescue operations, training, artificial intelligence laboratories, and other real-world robotics tasks. In this context, several robotic platforms have been designed for rescue, research, and educational purposes in the field of rescue robots. One of the most well-known platforms is the Recon Scout, as shown in Figure.~\ref{fig_Recon}. This robot is not suitable for rescue tasks in real environments that require high precision, as it is entirely controlled manually by humans. However, it can be used in other applications. Additionally, this project has developed a robotic platform that enables wireless remote communication and connectivity, allowing it to perform tasks that were previously not feasible for most mobile robots, such as being deployable and waterproof.
 
-Keep your text and graphic files separate until after the text has been 
-formatted and styled. Do not number text heads---{\LaTeX} will do that 
-for you.
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=0.5\textwidth]{Fig_ReconScout.PNG}}
+\caption{Recon Scout platform.}
+\label{fig_Recon}
+\end{figure}
 
 \subsection{Abbreviations and Acronyms}\label{AA}
 Define abbreviations and acronyms the first time they are used in the text, 
@@ -196,7 +192,7 @@ copy& More table copy$^{\mathrm{a}}$& &  \\
 \end{table}
 
 \begin{figure}[htbp]
-\centerline{\includegraphics{Fig_T2.png}}
+\centerline{\includegraphics[width=0.5\textwidth]{Fig_T2.png}}
 \caption{Example of a figure caption.}
 \label{fig}
 \end{figure}
