@@ -16,5 +16,10 @@ namespace ThrowBot_GUI
         {
             InitializeComponent();
         }
+
+        private void Exit_button_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
