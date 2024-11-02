@@ -10,16 +10,22 @@ using System.Windows.Forms;
 
 namespace ThrowBot_GUI
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        private void Exit_button_Click(object sender, EventArgs e)
+        private void Exit_pictureBox_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Config_pictureBox_Click(object sender, EventArgs e)
+        {
+            ConfigForm configForm = new ConfigForm();
+            configForm.ShowDialog(this);
         }
     }
 }

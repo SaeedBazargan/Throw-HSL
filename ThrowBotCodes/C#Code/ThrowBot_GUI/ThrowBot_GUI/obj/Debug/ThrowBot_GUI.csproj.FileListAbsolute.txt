@@ -2,9 +2,14 @@ D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bi
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\ThrowBot_GUI.exe
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\ThrowBot_GUI.pdb
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.csproj.AssemblyReference.cache
-D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.Form1.resources
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.Properties.Resources.resources
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.csproj.GenerateResource.cache
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.csproj.CoreCompileInputs.cache
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.exe
 D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.pdb
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\CircularProgressBar.dll
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\WinFormAnimation.dll
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\CircularProgressBar.xml
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot.7C9248E3.Up2Date
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.ConfigForm.resources
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\obj\Debug\ThrowBot_GUI.MainForm.resources
