@@ -501,7 +501,7 @@
             this.ServerIP_label.AutoSize = true;
             this.ServerIP_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerIP_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.ServerIP_label.Location = new System.Drawing.Point(5, 341);
+            this.ServerIP_label.Location = new System.Drawing.Point(0, 341);
             this.ServerIP_label.Name = "ServerIP_label";
             this.ServerIP_label.Size = new System.Drawing.Size(67, 15);
             this.ServerIP_label.TabIndex = 5;
@@ -512,7 +512,7 @@
             this.ServerIPandPort_label.AutoSize = true;
             this.ServerIPandPort_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerIPandPort_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.ServerIPandPort_label.Location = new System.Drawing.Point(76, 341);
+            this.ServerIPandPort_label.Location = new System.Drawing.Point(62, 341);
             this.ServerIPandPort_label.Name = "ServerIPandPort_label";
             this.ServerIPandPort_label.Size = new System.Drawing.Size(104, 15);
             this.ServerIPandPort_label.TabIndex = 6;
