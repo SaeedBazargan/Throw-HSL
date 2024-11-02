@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using ThrowBot_GUI.Controller;
 
 
 namespace ThrowBot_GUI
@@ -16,12 +17,13 @@ namespace ThrowBot_GUI
     public partial class MainForm : Form
     {
         private readonly int serverPort = 8000;
+        private readonly IP_Configs ip_Configs;
 
         public MainForm()
         {
             InitializeComponent();
-
-            DisplayServerIP();
+            ip_Configs = new IP_Configs();
+            ip_Configs.DisplayServerIP(ServerIPandPort_label, serverPort);
         }
 
         private void Exit_pictureBox_Click(object sender, EventArgs e)
@@ -34,32 +36,6 @@ namespace ThrowBot_GUI
             ConfigForm configForm = new ConfigForm();
             configForm.ShowDialog(this);
         }
-
-
-
-
-
-
-
-        private void DisplayServerIP()
-        {
-            string serverIP = GetLocalIPAddress();
-            if(serverIP == "0")
-                ServerIPandPort_label.Text = "  IP not found.";
-            ServerIPandPort_label.Text = $"{serverIP}:{serverPort}";
-        }
-
-        private string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-            return "0";
-        }
     }
 }
+
