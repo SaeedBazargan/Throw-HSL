@@ -27,7 +27,7 @@ namespace ThrowBot_GUI
 
             ip_Configs = new IP_Configs();
             ip_Configs.DisplayServerIP(ServerIPandPort_label, serverPort);
-            ip_Configs.StartTcpServer(serverPort, ServerStatus_panel);
+            ip_Configs.StartTcpServer(serverPort, ServerStatus_panel, Main_pictureBox);
 
             joystick = new JoystickController();
             joystick.Initialize();

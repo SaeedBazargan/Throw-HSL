@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
 
 namespace ThrowBot_GUI.Controller
 {
@@ -37,7 +40,7 @@ namespace ThrowBot_GUI.Controller
             return "0";
         }
 
-        public async void StartTcpServer(int port, Panel serverStatus_panel)
+        public async void StartTcpServer(int port, Panel serverStatus_panel, PictureBox main_pictureBox)
         {
             _listener = new TcpListener(IPAddress.Parse(serverIP), port);
             _listener.Start();
@@ -48,7 +51,7 @@ namespace ThrowBot_GUI.Controller
                 while (!_cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     var client = await _listener.AcceptTcpClientAsync();
-                    _ = Task.Run(() => HandleClientAsync(client, serverStatus_panel));
+                    _ = Task.Run(() => HandleClient(client, serverStatus_panel, main_pictureBox));
                 }
             }
             catch (Exception ex)
@@ -63,27 +66,60 @@ namespace ThrowBot_GUI.Controller
             }
         }
 
-        private async Task HandleClientAsync(TcpClient client, Panel serverStatus_panel)
+        private async Task HandleClient(TcpClient client, Panel serverStatus_panel, PictureBox main_pictureBox)
         {
             using (client)
             {
-                var buffer = new byte[1024];
                 var stream = client.GetStream();
+                ChangePanel(serverStatus_panel, "Green");  // Green for Connect
 
-                var responseMessage = "MRL?";
-                var responseData = Encoding.UTF8.GetBytes(responseMessage);
-                await stream.WriteAsync(responseData, 0, responseData.Length);
-
-                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                var message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                if (message == "HSL!")
+                try
                 {
-                    ChangePanel(serverStatus_panel, "Green");           // Green for Connect
+                    while (!_cancellationTokenSource.Token.IsCancellationRequested)
+                    {
+                        // Read frame size
+                        byte[] sizeBuffer = new byte[4];
+                        int bytesRead = await stream.ReadAsync(sizeBuffer, 0, sizeBuffer.Length);
+                        if (bytesRead == 0) break;
+
+                        int frameSize = BitConverter.ToInt32(sizeBuffer, 0);
+                        byte[] frameBuffer = new byte[frameSize];
+
+                        // Read frame data
+                        int totalBytesRead = 0;
+                        while (totalBytesRead < frameSize)
+                        {
+                            int read = await stream.ReadAsync(frameBuffer, totalBytesRead, frameSize - totalBytesRead);
+                            if (read == 0) break;
+                            totalBytesRead += read;
+                        }
+
+                        // Decode and display the frame
+                        if (totalBytesRead == frameSize)
+                        {
+                            // Decode the frame using OpenCvSharp
+                            Mat frame = Cv2.ImDecode(frameBuffer, ImreadModes.Color);
+
+                            if (frame != null && !frame.Empty())
+                            {
+                                // Convert Mat to Bitmap for displaying in PictureBox
+                                Bitmap bitmap = BitmapConverter.ToBitmap(frame);
+                                main_pictureBox.Invoke(new Action(() => main_pictureBox.Image = bitmap));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error in receiving frames: {ex.Message}");
+                }
+                finally
+                {
+                    ChangePanel(serverStatus_panel, "Red");  // Red for Disconnect
                 }
             }
         }
 
-        // Call this method to stop the server when needed
         public void StopTcpServer()
         {
             _cancellationTokenSource?.Cancel();
