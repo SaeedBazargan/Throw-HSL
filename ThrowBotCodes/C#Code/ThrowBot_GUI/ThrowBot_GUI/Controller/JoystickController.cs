@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using SharpDX;
 using SharpDX.DirectInput;
@@ -7,6 +8,8 @@ namespace ThrowBot_GUI.Controller
 {
     public class JoystickController : ControllerBase
     {
+        private CancellationTokenSource _cancellationTokenSource;
+
         private DirectInput directInput;
         private Joystick _joystick;
         private Guid joystickGuid;
@@ -54,14 +57,18 @@ namespace ThrowBot_GUI.Controller
                 return;
             }
 
+            _cancellationTokenSource = new CancellationTokenSource();
+            var token = _cancellationTokenSource.Token;
+
             USB_JoystickTask = Task.Run(() =>
             {
-                while (true)
+                while (!token.IsCancellationRequested)
                 {
                     _joystick.Poll();
                     var joystickState = _joystick.GetCurrentState();
+                    // Process joystick input here
                 }
-            });
+            }, token);
         }
     }
 }

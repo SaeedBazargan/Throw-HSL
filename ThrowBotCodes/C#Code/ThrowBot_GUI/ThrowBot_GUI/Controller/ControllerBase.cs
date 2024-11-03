@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,15 @@ namespace ThrowBot_GUI.Controller
                 label.Invoke((MethodInvoker)delegate{ label.Text = text; });
             else
                 label.Text = text;
+        }
+
+        protected static void ChangePanel(Panel panel, String color)
+        {
+            if (panel.IsHandleCreated)
+                if(color == "Red")
+                    panel.Invoke((MethodInvoker)delegate { panel.BackColor = Color.FromArgb(255, 10, 10); });
+                else if(color == "Green")
+                    panel.Invoke((MethodInvoker)delegate { panel.BackColor = Color.FromArgb(10, 255, 10); });
         }
     }
 }
