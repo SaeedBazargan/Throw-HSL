@@ -31,9 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.ServerStatus_panel = new System.Windows.Forms.Panel();
+            this.ServerIPandPort_label = new System.Windows.Forms.Label();
+            this.ServerIP_label = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.circularProgressBar1 = new CircularProgressBar.CircularProgressBar();
+            this.Orientation_circularProgressBar = new CircularProgressBar.CircularProgressBar();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.Exit_pictureBox = new System.Windows.Forms.PictureBox();
@@ -44,35 +46,38 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.Main_pictureBox = new System.Windows.Forms.PictureBox();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.BatteryVoltage_label = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.AlarmLED_label = new System.Windows.Forms.Label();
-            this.LowPower_label = new System.Windows.Forms.Label();
-            this.PresentSpeed1_label = new System.Windows.Forms.Label();
-            this.LED1_label = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.PresentSpeed2_label = new System.Windows.Forms.Label();
-            this.LED2_label = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.ServerIP_label = new System.Windows.Forms.Label();
-            this.ServerIPandPort_label = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.AudioEn_label = new System.Windows.Forms.Label();
             this.GrayEn_label = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.YoloEn_label = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
+            this.PresentSpeed2_label = new System.Windows.Forms.Label();
+            this.LED2_label = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.PresentSpeed1_label = new System.Windows.Forms.Label();
+            this.LED1_label = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.LowPower_label = new System.Windows.Forms.Label();
+            this.AlarmLED_label = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.BatteryVoltage_label = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.JoystickX_circularProgressBar = new CircularProgressBar.CircularProgressBar();
+            this.JoystickY_circularProgressBar = new CircularProgressBar.CircularProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.panel12 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -99,72 +104,96 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.panel12);
+            this.panel6.Controls.Add(this.panel11);
+            this.panel6.Controls.Add(this.label1);
+            this.panel6.Controls.Add(this.JoystickY_circularProgressBar);
+            this.panel6.Controls.Add(this.JoystickX_circularProgressBar);
+            this.panel6.Controls.Add(this.ServerStatus_panel);
             this.panel6.Controls.Add(this.ServerIPandPort_label);
             this.panel6.Controls.Add(this.ServerIP_label);
-            this.panel6.Controls.Add(this.label7);
             this.panel6.Controls.Add(this.label6);
-            this.panel6.Controls.Add(this.circularProgressBar1);
+            this.panel6.Controls.Add(this.Orientation_circularProgressBar);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel6.Location = new System.Drawing.Point(0, 144);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(186, 363);
             this.panel6.TabIndex = 5;
             // 
-            // label7
+            // ServerStatus_panel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label7.Location = new System.Drawing.Point(71, 262);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 15);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Example:";
+            this.ServerStatus_panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.ServerStatus_panel.Location = new System.Drawing.Point(6, 324);
+            this.ServerStatus_panel.Name = "ServerStatus_panel";
+            this.ServerStatus_panel.Size = new System.Drawing.Size(14, 14);
+            this.ServerStatus_panel.TabIndex = 7;
+            // 
+            // ServerIPandPort_label
+            // 
+            this.ServerIPandPort_label.AutoSize = true;
+            this.ServerIPandPort_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerIPandPort_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.ServerIPandPort_label.Location = new System.Drawing.Point(62, 341);
+            this.ServerIPandPort_label.Name = "ServerIPandPort_label";
+            this.ServerIPandPort_label.Size = new System.Drawing.Size(104, 15);
+            this.ServerIPandPort_label.TabIndex = 6;
+            this.ServerIPandPort_label.Text = "192.168.1.1:8000";
+            // 
+            // ServerIP_label
+            // 
+            this.ServerIP_label.AutoSize = true;
+            this.ServerIP_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerIP_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.ServerIP_label.Location = new System.Drawing.Point(0, 341);
+            this.ServerIP_label.Name = "ServerIP_label";
+            this.ServerIP_label.Size = new System.Drawing.Size(67, 15);
+            this.ServerIP_label.TabIndex = 5;
+            this.ServerIP_label.Text = "Server_IP:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(57, 70);
+            this.label6.Location = new System.Drawing.Point(54, 5);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 19);
             this.label6.TabIndex = 4;
             this.label6.Text = "Orientation";
             // 
-            // circularProgressBar1
+            // Orientation_circularProgressBar
             // 
-            this.circularProgressBar1.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.circularProgressBar1.AnimationSpeed = 500;
-            this.circularProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.circularProgressBar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Bold);
-            this.circularProgressBar1.ForeColor = System.Drawing.Color.White;
-            this.circularProgressBar1.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
-            this.circularProgressBar1.InnerMargin = 2;
-            this.circularProgressBar1.InnerWidth = -1;
-            this.circularProgressBar1.Location = new System.Drawing.Point(24, 88);
-            this.circularProgressBar1.MarqueeAnimationSpeed = 2000;
-            this.circularProgressBar1.Name = "circularProgressBar1";
-            this.circularProgressBar1.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.circularProgressBar1.OuterMargin = -25;
-            this.circularProgressBar1.OuterWidth = 26;
-            this.circularProgressBar1.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
-            this.circularProgressBar1.ProgressWidth = 10;
-            this.circularProgressBar1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.circularProgressBar1.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
-            this.circularProgressBar1.Size = new System.Drawing.Size(150, 150);
-            this.circularProgressBar1.StartAngle = 268;
-            this.circularProgressBar1.Step = 1;
-            this.circularProgressBar1.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.circularProgressBar1.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
-            this.circularProgressBar1.SubscriptText = "";
-            this.circularProgressBar1.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.circularProgressBar1.SuperscriptMargin = new System.Windows.Forms.Padding(10, 35, 0, 0);
-            this.circularProgressBar1.SuperscriptText = "°";
-            this.circularProgressBar1.TabIndex = 3;
-            this.circularProgressBar1.Text = "0";
-            this.circularProgressBar1.TextMargin = new System.Windows.Forms.Padding(5, 8, 0, 0);
-            this.circularProgressBar1.Value = 1;
+            this.Orientation_circularProgressBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.Orientation_circularProgressBar.AnimationSpeed = 500;
+            this.Orientation_circularProgressBar.BackColor = System.Drawing.Color.Transparent;
+            this.Orientation_circularProgressBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Orientation_circularProgressBar.ForeColor = System.Drawing.Color.White;
+            this.Orientation_circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.Orientation_circularProgressBar.InnerMargin = 2;
+            this.Orientation_circularProgressBar.InnerWidth = -1;
+            this.Orientation_circularProgressBar.Location = new System.Drawing.Point(46, 27);
+            this.Orientation_circularProgressBar.MarqueeAnimationSpeed = 2000;
+            this.Orientation_circularProgressBar.Name = "Orientation_circularProgressBar";
+            this.Orientation_circularProgressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.Orientation_circularProgressBar.OuterMargin = -25;
+            this.Orientation_circularProgressBar.OuterWidth = 26;
+            this.Orientation_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
+            this.Orientation_circularProgressBar.ProgressWidth = 8;
+            this.Orientation_circularProgressBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.Orientation_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Orientation_circularProgressBar.Size = new System.Drawing.Size(100, 100);
+            this.Orientation_circularProgressBar.StartAngle = 268;
+            this.Orientation_circularProgressBar.Step = 1;
+            this.Orientation_circularProgressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.Orientation_circularProgressBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
+            this.Orientation_circularProgressBar.SubscriptText = "";
+            this.Orientation_circularProgressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.Orientation_circularProgressBar.SuperscriptMargin = new System.Windows.Forms.Padding(0, 35, 0, 0);
+            this.Orientation_circularProgressBar.SuperscriptText = "°";
+            this.Orientation_circularProgressBar.TabIndex = 3;
+            this.Orientation_circularProgressBar.Text = "0";
+            this.Orientation_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(8, 5, 0, 0);
+            this.Orientation_circularProgressBar.Value = 1;
             // 
             // panel5
             // 
@@ -298,225 +327,29 @@
             this.panel7.Size = new System.Drawing.Size(765, 119);
             this.panel7.TabIndex = 2;
             // 
-            // label5
+            // panel10
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(226)))), ((int)(((byte)(178)))));
-            this.label5.Location = new System.Drawing.Point(27, 77);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 15);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Alarm LED:";
+            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
+            this.panel10.Location = new System.Drawing.Point(531, 42);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(3, 50);
+            this.panel10.TabIndex = 24;
             // 
-            // BatteryVoltage_label
+            // panel9
             // 
-            this.BatteryVoltage_label.AutoSize = true;
-            this.BatteryVoltage_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BatteryVoltage_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.BatteryVoltage_label.Location = new System.Drawing.Point(129, 27);
-            this.BatteryVoltage_label.Name = "BatteryVoltage_label";
-            this.BatteryVoltage_label.Size = new System.Drawing.Size(36, 15);
-            this.BatteryVoltage_label.TabIndex = 2;
-            this.BatteryVoltage_label.Text = "0.0 V";
+            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
+            this.panel9.Location = new System.Drawing.Point(358, 42);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(3, 50);
+            this.panel9.TabIndex = 3;
             // 
-            // label3
+            // panel8
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
-            this.label3.Location = new System.Drawing.Point(27, 52);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 15);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Low Power:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(27, 27);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(96, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Battery Voltage:";
-            // 
-            // AlarmLED_label
-            // 
-            this.AlarmLED_label.AutoSize = true;
-            this.AlarmLED_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AlarmLED_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.AlarmLED_label.Location = new System.Drawing.Point(129, 77);
-            this.AlarmLED_label.Name = "AlarmLED_label";
-            this.AlarmLED_label.Size = new System.Drawing.Size(35, 15);
-            this.AlarmLED_label.TabIndex = 4;
-            this.AlarmLED_label.Text = "None";
-            // 
-            // LowPower_label
-            // 
-            this.LowPower_label.AutoSize = true;
-            this.LowPower_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LowPower_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.LowPower_label.Location = new System.Drawing.Point(129, 52);
-            this.LowPower_label.Name = "LowPower_label";
-            this.LowPower_label.Size = new System.Drawing.Size(48, 15);
-            this.LowPower_label.TabIndex = 5;
-            this.LowPower_label.Text = "Disable";
-            // 
-            // PresentSpeed1_label
-            // 
-            this.PresentSpeed1_label.AutoSize = true;
-            this.PresentSpeed1_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PresentSpeed1_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.PresentSpeed1_label.Location = new System.Drawing.Point(289, 52);
-            this.PresentSpeed1_label.Name = "PresentSpeed1_label";
-            this.PresentSpeed1_label.Size = new System.Drawing.Size(24, 15);
-            this.PresentSpeed1_label.TabIndex = 11;
-            this.PresentSpeed1_label.Text = "0.0";
-            // 
-            // LED1_label
-            // 
-            this.LED1_label.AutoSize = true;
-            this.LED1_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LED1_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.LED1_label.Location = new System.Drawing.Point(289, 77);
-            this.LED1_label.Name = "LED1_label";
-            this.LED1_label.Size = new System.Drawing.Size(31, 15);
-            this.LED1_label.TabIndex = 10;
-            this.LED1_label.Text = "OFF";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(226)))), ((int)(((byte)(178)))));
-            this.label12.Location = new System.Drawing.Point(194, 77);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(35, 15);
-            this.label12.TabIndex = 9;
-            this.label12.Text = "LED:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label13.Location = new System.Drawing.Point(289, 27);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(34, 15);
-            this.label13.TabIndex = 8;
-            this.label13.Text = "ID_1";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
-            this.label14.Location = new System.Drawing.Point(194, 52);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(89, 15);
-            this.label14.TabIndex = 7;
-            this.label14.Text = "Present Speed:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(194, 27);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(64, 15);
-            this.label15.TabIndex = 6;
-            this.label15.Text = "Motor_ID:";
-            // 
-            // PresentSpeed2_label
-            // 
-            this.PresentSpeed2_label.AutoSize = true;
-            this.PresentSpeed2_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PresentSpeed2_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.PresentSpeed2_label.Location = new System.Drawing.Point(462, 52);
-            this.PresentSpeed2_label.Name = "PresentSpeed2_label";
-            this.PresentSpeed2_label.Size = new System.Drawing.Size(24, 15);
-            this.PresentSpeed2_label.TabIndex = 17;
-            this.PresentSpeed2_label.Text = "0.0";
-            // 
-            // LED2_label
-            // 
-            this.LED2_label.AutoSize = true;
-            this.LED2_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LED2_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.LED2_label.Location = new System.Drawing.Point(462, 77);
-            this.LED2_label.Name = "LED2_label";
-            this.LED2_label.Size = new System.Drawing.Size(31, 15);
-            this.LED2_label.TabIndex = 16;
-            this.LED2_label.Text = "OFF";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(226)))), ((int)(((byte)(178)))));
-            this.label18.Location = new System.Drawing.Point(367, 77);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(35, 15);
-            this.label18.TabIndex = 15;
-            this.label18.Text = "LED:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.label19.Location = new System.Drawing.Point(462, 27);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(34, 15);
-            this.label19.TabIndex = 14;
-            this.label19.Text = "ID_2";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
-            this.label20.Location = new System.Drawing.Point(367, 52);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(89, 15);
-            this.label20.TabIndex = 13;
-            this.label20.Text = "Present Speed:";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(367, 27);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(64, 15);
-            this.label21.TabIndex = 12;
-            this.label21.Text = "Motor_ID:";
-            // 
-            // ServerIP_label
-            // 
-            this.ServerIP_label.AutoSize = true;
-            this.ServerIP_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerIP_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.ServerIP_label.Location = new System.Drawing.Point(0, 341);
-            this.ServerIP_label.Name = "ServerIP_label";
-            this.ServerIP_label.Size = new System.Drawing.Size(67, 15);
-            this.ServerIP_label.TabIndex = 5;
-            this.ServerIP_label.Text = "Server_IP:";
-            // 
-            // ServerIPandPort_label
-            // 
-            this.ServerIPandPort_label.AutoSize = true;
-            this.ServerIPandPort_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerIPandPort_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.ServerIPandPort_label.Location = new System.Drawing.Point(62, 341);
-            this.ServerIPandPort_label.Name = "ServerIPandPort_label";
-            this.ServerIPandPort_label.Size = new System.Drawing.Size(104, 15);
-            this.ServerIPandPort_label.TabIndex = 6;
-            this.ServerIPandPort_label.Text = "192.168.1.1:8000";
+            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
+            this.panel8.Location = new System.Drawing.Point(185, 42);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(3, 50);
+            this.panel8.TabIndex = 2;
             // 
             // AudioEn_label
             // 
@@ -584,29 +417,298 @@
             this.label16.TabIndex = 18;
             this.label16.Text = "YOLO:";
             // 
-            // panel8
+            // PresentSpeed2_label
             // 
-            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
-            this.panel8.Location = new System.Drawing.Point(185, 42);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(3, 50);
-            this.panel8.TabIndex = 2;
+            this.PresentSpeed2_label.AutoSize = true;
+            this.PresentSpeed2_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PresentSpeed2_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.PresentSpeed2_label.Location = new System.Drawing.Point(462, 52);
+            this.PresentSpeed2_label.Name = "PresentSpeed2_label";
+            this.PresentSpeed2_label.Size = new System.Drawing.Size(24, 15);
+            this.PresentSpeed2_label.TabIndex = 17;
+            this.PresentSpeed2_label.Text = "0.0";
             // 
-            // panel9
+            // LED2_label
             // 
-            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
-            this.panel9.Location = new System.Drawing.Point(358, 42);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(3, 50);
-            this.panel9.TabIndex = 3;
+            this.LED2_label.AutoSize = true;
+            this.LED2_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LED2_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.LED2_label.Location = new System.Drawing.Point(462, 77);
+            this.LED2_label.Name = "LED2_label";
+            this.LED2_label.Size = new System.Drawing.Size(31, 15);
+            this.LED2_label.TabIndex = 16;
+            this.LED2_label.Text = "OFF";
             // 
-            // panel10
+            // label18
             // 
-            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
-            this.panel10.Location = new System.Drawing.Point(531, 42);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(3, 50);
-            this.panel10.TabIndex = 24;
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(226)))), ((int)(((byte)(178)))));
+            this.label18.Location = new System.Drawing.Point(367, 77);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(35, 15);
+            this.label18.TabIndex = 15;
+            this.label18.Text = "LED:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.label19.Location = new System.Drawing.Point(462, 27);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(34, 15);
+            this.label19.TabIndex = 14;
+            this.label19.Text = "ID_2";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
+            this.label20.Location = new System.Drawing.Point(367, 52);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(89, 15);
+            this.label20.TabIndex = 13;
+            this.label20.Text = "Present Speed:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.White;
+            this.label21.Location = new System.Drawing.Point(367, 27);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(64, 15);
+            this.label21.TabIndex = 12;
+            this.label21.Text = "Motor_ID:";
+            // 
+            // PresentSpeed1_label
+            // 
+            this.PresentSpeed1_label.AutoSize = true;
+            this.PresentSpeed1_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PresentSpeed1_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.PresentSpeed1_label.Location = new System.Drawing.Point(289, 52);
+            this.PresentSpeed1_label.Name = "PresentSpeed1_label";
+            this.PresentSpeed1_label.Size = new System.Drawing.Size(24, 15);
+            this.PresentSpeed1_label.TabIndex = 11;
+            this.PresentSpeed1_label.Text = "0.0";
+            // 
+            // LED1_label
+            // 
+            this.LED1_label.AutoSize = true;
+            this.LED1_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LED1_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.LED1_label.Location = new System.Drawing.Point(289, 77);
+            this.LED1_label.Name = "LED1_label";
+            this.LED1_label.Size = new System.Drawing.Size(31, 15);
+            this.LED1_label.TabIndex = 10;
+            this.LED1_label.Text = "OFF";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(226)))), ((int)(((byte)(178)))));
+            this.label12.Location = new System.Drawing.Point(194, 77);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(35, 15);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "LED:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.label13.Location = new System.Drawing.Point(289, 27);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(34, 15);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "ID_1";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
+            this.label14.Location = new System.Drawing.Point(194, 52);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(89, 15);
+            this.label14.TabIndex = 7;
+            this.label14.Text = "Present Speed:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(194, 27);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(64, 15);
+            this.label15.TabIndex = 6;
+            this.label15.Text = "Motor_ID:";
+            // 
+            // LowPower_label
+            // 
+            this.LowPower_label.AutoSize = true;
+            this.LowPower_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LowPower_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.LowPower_label.Location = new System.Drawing.Point(129, 52);
+            this.LowPower_label.Name = "LowPower_label";
+            this.LowPower_label.Size = new System.Drawing.Size(48, 15);
+            this.LowPower_label.TabIndex = 5;
+            this.LowPower_label.Text = "Disable";
+            // 
+            // AlarmLED_label
+            // 
+            this.AlarmLED_label.AutoSize = true;
+            this.AlarmLED_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AlarmLED_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.AlarmLED_label.Location = new System.Drawing.Point(129, 77);
+            this.AlarmLED_label.Name = "AlarmLED_label";
+            this.AlarmLED_label.Size = new System.Drawing.Size(35, 15);
+            this.AlarmLED_label.TabIndex = 4;
+            this.AlarmLED_label.Text = "None";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(226)))), ((int)(((byte)(178)))));
+            this.label5.Location = new System.Drawing.Point(27, 77);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(73, 15);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Alarm LED:";
+            // 
+            // BatteryVoltage_label
+            // 
+            this.BatteryVoltage_label.AutoSize = true;
+            this.BatteryVoltage_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BatteryVoltage_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.BatteryVoltage_label.Location = new System.Drawing.Point(129, 27);
+            this.BatteryVoltage_label.Name = "BatteryVoltage_label";
+            this.BatteryVoltage_label.Size = new System.Drawing.Size(36, 15);
+            this.BatteryVoltage_label.TabIndex = 2;
+            this.BatteryVoltage_label.Text = "0.0 V";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(146)))), ((int)(((byte)(249)))));
+            this.label3.Location = new System.Drawing.Point(27, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Low Power:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(27, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(96, 15);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Battery Voltage:";
+            // 
+            // JoystickX_circularProgressBar
+            // 
+            this.JoystickX_circularProgressBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.JoystickX_circularProgressBar.AnimationSpeed = 500;
+            this.JoystickX_circularProgressBar.BackColor = System.Drawing.Color.Transparent;
+            this.JoystickX_circularProgressBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickX_circularProgressBar.ForeColor = System.Drawing.Color.White;
+            this.JoystickX_circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.JoystickX_circularProgressBar.InnerMargin = 2;
+            this.JoystickX_circularProgressBar.InnerWidth = -1;
+            this.JoystickX_circularProgressBar.Location = new System.Drawing.Point(12, 172);
+            this.JoystickX_circularProgressBar.MarqueeAnimationSpeed = 2000;
+            this.JoystickX_circularProgressBar.Name = "JoystickX_circularProgressBar";
+            this.JoystickX_circularProgressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.JoystickX_circularProgressBar.OuterMargin = -25;
+            this.JoystickX_circularProgressBar.OuterWidth = 26;
+            this.JoystickX_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
+            this.JoystickX_circularProgressBar.ProgressWidth = 8;
+            this.JoystickX_circularProgressBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.JoystickX_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickX_circularProgressBar.Size = new System.Drawing.Size(80, 80);
+            this.JoystickX_circularProgressBar.StartAngle = 268;
+            this.JoystickX_circularProgressBar.Step = 1;
+            this.JoystickX_circularProgressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickX_circularProgressBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
+            this.JoystickX_circularProgressBar.SubscriptText = "";
+            this.JoystickX_circularProgressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickX_circularProgressBar.SuperscriptMargin = new System.Windows.Forms.Padding(0, 35, 0, 0);
+            this.JoystickX_circularProgressBar.SuperscriptText = "";
+            this.JoystickX_circularProgressBar.TabIndex = 8;
+            this.JoystickX_circularProgressBar.Text = "x";
+            this.JoystickX_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(0);
+            this.JoystickX_circularProgressBar.Value = 1;
+            // 
+            // JoystickY_circularProgressBar
+            // 
+            this.JoystickY_circularProgressBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.JoystickY_circularProgressBar.AnimationSpeed = 500;
+            this.JoystickY_circularProgressBar.BackColor = System.Drawing.Color.Transparent;
+            this.JoystickY_circularProgressBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickY_circularProgressBar.ForeColor = System.Drawing.Color.White;
+            this.JoystickY_circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.JoystickY_circularProgressBar.InnerMargin = 2;
+            this.JoystickY_circularProgressBar.InnerWidth = -1;
+            this.JoystickY_circularProgressBar.Location = new System.Drawing.Point(98, 172);
+            this.JoystickY_circularProgressBar.MarqueeAnimationSpeed = 2000;
+            this.JoystickY_circularProgressBar.Name = "JoystickY_circularProgressBar";
+            this.JoystickY_circularProgressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.JoystickY_circularProgressBar.OuterMargin = -25;
+            this.JoystickY_circularProgressBar.OuterWidth = 26;
+            this.JoystickY_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
+            this.JoystickY_circularProgressBar.ProgressWidth = 8;
+            this.JoystickY_circularProgressBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.JoystickY_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickY_circularProgressBar.Size = new System.Drawing.Size(80, 80);
+            this.JoystickY_circularProgressBar.StartAngle = 268;
+            this.JoystickY_circularProgressBar.Step = 1;
+            this.JoystickY_circularProgressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickY_circularProgressBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
+            this.JoystickY_circularProgressBar.SubscriptText = "";
+            this.JoystickY_circularProgressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickY_circularProgressBar.SuperscriptMargin = new System.Windows.Forms.Padding(0, 35, 0, 0);
+            this.JoystickY_circularProgressBar.SuperscriptText = "";
+            this.JoystickY_circularProgressBar.TabIndex = 9;
+            this.JoystickY_circularProgressBar.Text = "y";
+            this.JoystickY_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(0);
+            this.JoystickY_circularProgressBar.Value = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(64, 152);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 19);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Joystick";
+            // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
+            this.panel11.Location = new System.Drawing.Point(71, 259);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(50, 3);
+            this.panel11.TabIndex = 25;
+            // 
+            // panel12
+            // 
+            this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
+            this.panel12.Location = new System.Drawing.Point(71, 137);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(50, 3);
+            this.panel12.TabIndex = 26;
             // 
             // MainForm
             // 
@@ -657,9 +759,8 @@
         private System.Windows.Forms.Label BatteryVoltage_label;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private CircularProgressBar.CircularProgressBar circularProgressBar1;
+        private CircularProgressBar.CircularProgressBar Orientation_circularProgressBar;
         private System.Windows.Forms.PictureBox Main_pictureBox;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label PresentSpeed2_label;
@@ -687,6 +788,12 @@
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel ServerStatus_panel;
+        private CircularProgressBar.CircularProgressBar JoystickX_circularProgressBar;
+        private CircularProgressBar.CircularProgressBar JoystickY_circularProgressBar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Panel panel11;
     }
 }
 

@@ -11,11 +11,11 @@ namespace ThrowBot_GUI.Controller
 {
     public class IP_Configs : ControllerBase
     {
-        public void DisplayServerIP(Label label, int port)
+        public void DisplayServerIP(Label serverIP_Port_label, int port)
         {
             string serverIP = GetLocalIPAddress();
             string text = (serverIP == "0" ? "IP not found." : $"{serverIP}:{port}");
-            ChangeLabel(label, text);
+            ChangeLabel(serverIP_Port_label, text);
         }
 
         private string GetLocalIPAddress()

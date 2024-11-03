@@ -19,11 +19,18 @@ namespace ThrowBot_GUI
         private readonly int serverPort = 8000;
         private readonly IP_Configs ip_Configs;
 
+        private readonly JoystickController joystick;
+
         public MainForm()
         {
             InitializeComponent();
+
             ip_Configs = new IP_Configs();
             ip_Configs.DisplayServerIP(ServerIPandPort_label, serverPort);
+
+            joystick = new JoystickController();
+            joystick.Initialize();
+            joystick.Start();
         }
 
         private void Exit_pictureBox_Click(object sender, EventArgs e)
