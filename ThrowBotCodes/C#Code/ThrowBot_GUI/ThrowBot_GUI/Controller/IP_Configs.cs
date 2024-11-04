@@ -52,24 +52,25 @@ namespace ThrowBot_GUI.Controller
                     var client = await _listener.AcceptTcpClientAsync();
                     if (client != null)
                     {
-                        ChangePanel(serverStatus_panel, "Green");       // Green for Connect
+                        ChangePanel(serverStatus_panel, "Green"); // Green for Connect
 
                         DataController dataController = new DataController();
-                        dataController.Initialize(client, main_pictureBox, serverStatus_panel);
+                        await dataController.Initialize(client, main_pictureBox, serverStatus_panel); // Await here
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
-                ChangePanel(serverStatus_panel, "Red");                 // Red for Disconnect
+                ChangePanel(serverStatus_panel, "Red"); // Red for Disconnect
             }
             finally
             {
                 StopTcpServer();
-                ChangePanel(serverStatus_panel, "Red");                 // Red for Disconnect
+                ChangePanel(serverStatus_panel, "Red"); // Red for Disconnect
             }
         }
+
 
         public void StopTcpServer()
         {

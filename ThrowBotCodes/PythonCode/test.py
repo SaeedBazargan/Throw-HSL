@@ -62,6 +62,15 @@ class CameraClient:
             try:
                 response = conn.recv(1024).decode()
                 print(f"receive_messages: {response}")
+
+                # Handle server handshake request
+                if response == "MRL?":
+                    # Send handshake response back to server
+                    handshake_message = "HSL!"
+                    self.send_messages(conn, handshake_message)
+                else:
+                    print("\nHand-Shake has not happened.\n\n\n")
+
             except Exception as e:
                 print(f"Error receiving message: {e}")
                 break
@@ -74,6 +83,7 @@ class CameraClient:
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.conn.connect((self.server_ip, self.server_port))
 
+        # Start the threads for sending frames and receiving messages
         self.send_thread = threading.Thread(target=self.send_frame, args=(self.conn,))
         self.send_thread.start()
 

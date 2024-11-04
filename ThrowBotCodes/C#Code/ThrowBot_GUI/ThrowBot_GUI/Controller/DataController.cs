@@ -16,10 +16,31 @@ namespace ThrowBot_GUI.Controller
     {
         private CancellationTokenSource _cancellationTokenSource;
 
-        public void Initialize(TcpClient client, PictureBox main_pictureBox, Panel serverStatus_panel)
+        public async Task Initialize(TcpClient client, PictureBox main_pictureBox, Panel serverStatus_panel) // Change to async Task
         {
-            _ = Task.Run(() => Start(client, main_pictureBox, serverStatus_panel));
+            using (client)
+            {
+                var stream = client.GetStream();
+                var buffer = new byte[1024];
+                var responseMessage = "MRL?";
+
+                var responseData = Encoding.UTF8.GetBytes(responseMessage);
+                await stream.WriteAsync(responseData, 0, responseData.Length);
+
+                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                var message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                if (message == "HSL!") // Expecting the client to respond with "HSL!"
+                {
+                    await Start(client, main_pictureBox, serverStatus_panel); // Await Start
+                }
+                else
+                {
+                    Console.WriteLine("Unexpected response from client.");
+                }
+            }
         }
+
 
         private async Task Start(TcpClient client, PictureBox main_pictureBox, Panel serverStatus_panel)
         {
@@ -59,7 +80,7 @@ namespace ThrowBot_GUI.Controller
                             if (frame != null && !frame.Empty())
                             {
                                 Bitmap bitmap = BitmapConverter.ToBitmap(frame);
-                                main_pictureBox.Invoke(new Action(() => main_pictureBox.Image = bitmap));
+                                ChangePictureBox(main_pictureBox, bitmap);
                             }
                         }
                     }

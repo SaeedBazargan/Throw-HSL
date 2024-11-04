@@ -34,6 +34,8 @@ namespace ThrowBot_GUI
             joystick = new JoystickController();
             joystick.Initialize();
             joystick.Start();
+
+            dataController = new DataController();
         }
 
         private void Exit_pictureBox_Click(object sender, EventArgs e)
