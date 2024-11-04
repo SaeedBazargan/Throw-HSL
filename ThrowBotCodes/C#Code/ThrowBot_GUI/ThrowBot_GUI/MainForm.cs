@@ -21,6 +21,8 @@ namespace ThrowBot_GUI
 
         private readonly JoystickController joystick;
 
+        private readonly DataController dataController;
+
         public MainForm()
         {
             InitializeComponent();

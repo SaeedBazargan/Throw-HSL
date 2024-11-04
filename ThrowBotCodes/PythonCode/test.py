@@ -17,8 +17,8 @@ class CameraClient:
     def open_camera(self):
         if self.camera is None or not self.camera.isOpened():
             self.camera = cv2.VideoCapture(self.camera_index, cv2.CAP_DSHOW)
-            self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-            self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+            self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+            self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
             self.camera.set(cv2.CAP_PROP_FPS, 15)
             return True
         return True
@@ -87,7 +87,7 @@ class CameraClient:
         self.release_camera()
 
 if __name__ == "__main__":
-    server_ip = '192.168.1.4'
+    server_ip = '192.168.60.181'
     server_port = 8000
     cameraClient = CameraClient(server_ip, server_port)
 

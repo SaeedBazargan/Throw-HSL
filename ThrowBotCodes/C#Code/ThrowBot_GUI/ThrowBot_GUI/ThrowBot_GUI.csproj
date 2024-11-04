@@ -111,6 +111,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\DataController.cs" />
     <Compile Include="Controller\ControllerBase.cs" />
     <Compile Include="Controller\IP_Configs.cs" />
     <Compile Include="Controller\JoystickController.cs" />

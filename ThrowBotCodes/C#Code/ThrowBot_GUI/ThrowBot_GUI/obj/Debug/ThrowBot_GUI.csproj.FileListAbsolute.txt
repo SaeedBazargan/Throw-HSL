@@ -90,3 +90,7 @@ C:\Users\Bazar\Desktop\qiau_master\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\Thr
 C:\Users\Bazar\Desktop\qiau_master\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\System.Drawing.Common.dll
 C:\Users\Bazar\Desktop\qiau_master\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\OpenCvSharp.Extensions.xml
 C:\Users\Bazar\Desktop\qiau_master\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\System.Drawing.Common.xml
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\OpenCvSharp.Extensions.dll
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\System.Drawing.Common.dll
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\OpenCvSharp.Extensions.xml
+D:\sbzrgn\سمینار\Seminar\ThrowBotCodes\C#Code\ThrowBot_GUI\ThrowBot_GUI\bin\Debug\System.Drawing.Common.xml
