@@ -55,7 +55,7 @@ class CameraClient:
                 conn.sendall(struct.pack("L", len(frame_data)))  # Send frame size
                 conn.sendall(frame_data)  # Send frame data
 
-            time.sleep(0.1)  # Small delay to prevent overwhelming the server
+            time.sleep(0.1)
 
     def receive_messages(self, conn):
         while self.running:
@@ -63,9 +63,7 @@ class CameraClient:
                 response = conn.recv(1024).decode()
                 print(f"receive_messages: {response}")
 
-                # Handle server handshake request
                 if response == "MRL?":
-                    # Send handshake response back to server
                     handshake_message = "HSL!"
                     self.send_messages(conn, handshake_message)
                 else:

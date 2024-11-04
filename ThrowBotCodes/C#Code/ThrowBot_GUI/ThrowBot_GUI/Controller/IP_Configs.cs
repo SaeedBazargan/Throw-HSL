@@ -55,7 +55,7 @@ namespace ThrowBot_GUI.Controller
                         ChangePanel(serverStatus_panel, "Green"); // Green for Connect
 
                         DataController dataController = new DataController();
-                        await dataController.Initialize(client, main_pictureBox, serverStatus_panel); // Await here
+                        await dataController.Initialize(client, main_pictureBox, serverStatus_panel);
                     }
                 }
             }

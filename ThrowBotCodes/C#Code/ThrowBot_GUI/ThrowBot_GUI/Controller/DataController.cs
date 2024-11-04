@@ -15,8 +15,9 @@ namespace ThrowBot_GUI.Controller
     public class DataController : ControllerBase
     {
         private CancellationTokenSource _cancellationTokenSource;
+        public bool isRunning = false;
 
-        public async Task Initialize(TcpClient client, PictureBox main_pictureBox, Panel serverStatus_panel) // Change to async Task
+        public async Task Initialize(TcpClient client, PictureBox main_pictureBox, Panel serverStatus_panel)
         {
             using (client)
             {
@@ -30,9 +31,10 @@ namespace ThrowBot_GUI.Controller
                 int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
                 var message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                if (message == "HSL!") // Expecting the client to respond with "HSL!"
+                if (message == "HSL!")
                 {
-                    await Start(client, main_pictureBox, serverStatus_panel); // Await Start
+                    isRunning = true;
+                    await StartCamera(client, main_pictureBox, serverStatus_panel);
                 }
                 else
                 {
@@ -42,7 +44,7 @@ namespace ThrowBot_GUI.Controller
         }
 
 
-        private async Task Start(TcpClient client, PictureBox main_pictureBox, Panel serverStatus_panel)
+        private async Task StartCamera(TcpClient client, PictureBox main_pictureBox, Panel serverStatus_panel)
         {
             using (client)
             {
@@ -91,6 +93,11 @@ namespace ThrowBot_GUI.Controller
                 }
             }
 
+        }
+
+        public async Task StartJoystick(bool[] Buttons)
+        {
+            Console.WriteLine("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using SharpDX;
 using SharpDX.DirectInput;
+using static System.Windows.Forms.AxHost;
 
 namespace ThrowBot_GUI.Controller
 {
@@ -60,13 +61,18 @@ namespace ThrowBot_GUI.Controller
             _cancellationTokenSource = new CancellationTokenSource();
             var token = _cancellationTokenSource.Token;
 
-            USB_JoystickTask = Task.Run(() =>
+            USB_JoystickTask = Task.Run(async () =>
             {
                 while (!token.IsCancellationRequested)
                 {
-                    _joystick.Poll();
-                    var joystickState = _joystick.GetCurrentState();
-                    // Process joystick input here
+                    DataController dataController = new DataController();
+                    if (dataController.isRunning == true)
+                    {
+                        _joystick.Poll();
+                        var joystickState = _joystick.GetCurrentState();
+
+                        await dataController.StartJoystick(joystickState.Buttons);
+                    }
                 }
             }, token);
         }
