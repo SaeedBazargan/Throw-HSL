@@ -44,18 +44,19 @@ class CameraClient:
                 if self.cameraMode == 1:
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-                # Encode the frame as JPEG
                 result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
                 if not result:
                     print("Error: Could not encode frame.")
                     continue
 
-                # Convert encoded frame to bytes
                 frame_data = encoded_frame.tobytes()
 
-                # Send the length of the data first, then the data itself
-                self.camera_conn.sendall(struct.pack("L", len(frame_data)))  # Send frame size
-                self.camera_conn.sendall(frame_data)  # Send frame data
+                try:
+                    self.camera_conn.sendall(struct.pack("L", len(frame_data)))
+                    self.camera_conn.sendall(frame_data)
+                except socket.error as e:
+                    print(f"Error sending frame: {e}")
+                    break
 
             time.sleep(0.1)
 
@@ -66,15 +67,13 @@ class CameraClient:
                 print(f"receive_messages: {response}")
 
                 if response == "MRL?":
-                    handshake_message = "HSL!"
-                    self.send_messages(handshake_message)
+                    self.send_messages("HSL!")
                 elif response == "12346":
                     self.send_messages("987654")
-                else:
-                    print("\nHand-Shake has not happened.\n\n\n")
-                    self.message_conn.close()
-                    self.release_camera()
-
+                # else:
+                #     print("\nHandshake has not happened.\n\n\n")
+                #     self.message_conn.close()
+                #     self.release_camera()
             except Exception as e:
                 print(f"Error receiving message: {e}")
                 break
@@ -84,33 +83,34 @@ class CameraClient:
         print(f'Sent: {message}')
 
     def start(self):
-        # Connect to the camera streaming server
-        self.camera_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.camera_conn.connect((self.server_ip, self.camera_port))
+        try:
+            # self.camera_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # self.camera_conn.connect((self.server_ip, self.camera_port))
 
-        # Connect to the messaging server
-        self.message_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.message_conn.connect((self.server_ip, self.message_port))
+            self.message_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.message_conn.connect((self.server_ip, self.message_port))
+        except socket.error as e:
+            print(f"Socket connection error: {e}")
+            return
 
-        # Start the threads for sending frames and receiving messages
-        self.send_thread = threading.Thread(target=self.send_frame)
-        self.send_thread.start()
+        # self.send_thread = threading.Thread(target=self.send_frame)
+        # self.send_thread.start()
 
         self.receive_thread = threading.Thread(target=self.receive_messages)
         self.receive_thread.start()
 
-        self.send_thread.join()
+        # self.send_thread.join()
         self.receive_thread.join()
 
-        self.camera_conn.close()
+        # self.camera_conn.close()
         self.message_conn.close()
         self.release_camera()
 
 if __name__ == "__main__":
-    server_ip = '192.168.60.181'
+    server_ip = '192.168.1.4'
     camera_port = 8000
-    message_port = 1234  # Use a different port for messaging
+    message_port = 1234
     cameraClient = CameraClient(server_ip, camera_port, message_port)
 
-    if cameraClient.open_camera():
-        cameraClient.start()
+    # if cameraClient.open_camera():
+    cameraClient.start()

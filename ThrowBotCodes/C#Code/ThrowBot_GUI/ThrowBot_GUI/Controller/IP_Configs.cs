@@ -56,6 +56,7 @@ namespace ThrowBot_GUI.Controller
             _listener.Start();
 
             _cancellationTokenSource = new CancellationTokenSource();
+            
             try
             {
                 while (!_cancellationTokenSource.Token.IsCancellationRequested)
