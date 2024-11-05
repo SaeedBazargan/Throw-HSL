@@ -19,9 +19,11 @@ namespace ThrowBot_GUI
     {
         private readonly CancellationTokenSource cancellationTokenSource;
 
+        private readonly int cameraPort  = 8000;
+        private readonly int messagePort = 1234;
+        private readonly ServerConfig server_Configs;
 
-        //private readonly int serverPort = 8000;
-        //private readonly IP_Configs ip_Configs;
+
 
         //private readonly JoystickController joystick;
 
@@ -32,6 +34,8 @@ namespace ThrowBot_GUI
             InitializeComponent();
 
             cancellationTokenSource = new CancellationTokenSource();
+
+            server_Configs = new ServerConfig(cameraPort, messagePort, ServerIP_label, ServerPort_label, ServerStatus_panel, cancellationTokenSource);
 
             //dataController = new DataController();
 
