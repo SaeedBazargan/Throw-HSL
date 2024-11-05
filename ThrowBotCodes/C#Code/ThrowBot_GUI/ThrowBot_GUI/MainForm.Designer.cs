@@ -31,9 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.JoystickY_circularProgressBar = new CircularProgressBar.CircularProgressBar();
+            this.JoystickX_circularProgressBar = new CircularProgressBar.CircularProgressBar();
             this.ServerStatus_panel = new System.Windows.Forms.Panel();
-            this.ServerIPandPort_label = new System.Windows.Forms.Label();
-            this.ServerIP_label = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.Orientation_circularProgressBar = new CircularProgressBar.CircularProgressBar();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -73,11 +77,9 @@
             this.BatteryVoltage_label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.JoystickX_circularProgressBar = new CircularProgressBar.CircularProgressBar();
-            this.JoystickY_circularProgressBar = new CircularProgressBar.CircularProgressBar();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.panel12 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ServerPort_label = new System.Windows.Forms.Label();
+            this.ServerIP_label = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -104,14 +106,16 @@
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.ServerIP_label);
+            this.panel6.Controls.Add(this.ServerPort_label);
+            this.panel6.Controls.Add(this.label4);
             this.panel6.Controls.Add(this.panel12);
             this.panel6.Controls.Add(this.panel11);
             this.panel6.Controls.Add(this.label1);
             this.panel6.Controls.Add(this.JoystickY_circularProgressBar);
             this.panel6.Controls.Add(this.JoystickX_circularProgressBar);
             this.panel6.Controls.Add(this.ServerStatus_panel);
-            this.panel6.Controls.Add(this.ServerIPandPort_label);
-            this.panel6.Controls.Add(this.ServerIP_label);
+            this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Controls.Add(this.Orientation_circularProgressBar);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
@@ -120,35 +124,119 @@
             this.panel6.Size = new System.Drawing.Size(186, 363);
             this.panel6.TabIndex = 5;
             // 
+            // panel12
+            // 
+            this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
+            this.panel12.Location = new System.Drawing.Point(71, 137);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(50, 3);
+            this.panel12.TabIndex = 26;
+            // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
+            this.panel11.Location = new System.Drawing.Point(71, 259);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(50, 3);
+            this.panel11.TabIndex = 25;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(64, 152);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 19);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Joystick";
+            // 
+            // JoystickY_circularProgressBar
+            // 
+            this.JoystickY_circularProgressBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.JoystickY_circularProgressBar.AnimationSpeed = 500;
+            this.JoystickY_circularProgressBar.BackColor = System.Drawing.Color.Transparent;
+            this.JoystickY_circularProgressBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickY_circularProgressBar.ForeColor = System.Drawing.Color.White;
+            this.JoystickY_circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.JoystickY_circularProgressBar.InnerMargin = 2;
+            this.JoystickY_circularProgressBar.InnerWidth = -1;
+            this.JoystickY_circularProgressBar.Location = new System.Drawing.Point(98, 172);
+            this.JoystickY_circularProgressBar.MarqueeAnimationSpeed = 2000;
+            this.JoystickY_circularProgressBar.Name = "JoystickY_circularProgressBar";
+            this.JoystickY_circularProgressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.JoystickY_circularProgressBar.OuterMargin = -25;
+            this.JoystickY_circularProgressBar.OuterWidth = 26;
+            this.JoystickY_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
+            this.JoystickY_circularProgressBar.ProgressWidth = 8;
+            this.JoystickY_circularProgressBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.JoystickY_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickY_circularProgressBar.Size = new System.Drawing.Size(80, 80);
+            this.JoystickY_circularProgressBar.StartAngle = 268;
+            this.JoystickY_circularProgressBar.Step = 1;
+            this.JoystickY_circularProgressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickY_circularProgressBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
+            this.JoystickY_circularProgressBar.SubscriptText = "";
+            this.JoystickY_circularProgressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickY_circularProgressBar.SuperscriptMargin = new System.Windows.Forms.Padding(0, 35, 0, 0);
+            this.JoystickY_circularProgressBar.SuperscriptText = "";
+            this.JoystickY_circularProgressBar.TabIndex = 9;
+            this.JoystickY_circularProgressBar.Text = "y";
+            this.JoystickY_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(0);
+            this.JoystickY_circularProgressBar.Value = 1;
+            // 
+            // JoystickX_circularProgressBar
+            // 
+            this.JoystickX_circularProgressBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.JoystickX_circularProgressBar.AnimationSpeed = 500;
+            this.JoystickX_circularProgressBar.BackColor = System.Drawing.Color.Transparent;
+            this.JoystickX_circularProgressBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickX_circularProgressBar.ForeColor = System.Drawing.Color.White;
+            this.JoystickX_circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.JoystickX_circularProgressBar.InnerMargin = 2;
+            this.JoystickX_circularProgressBar.InnerWidth = -1;
+            this.JoystickX_circularProgressBar.Location = new System.Drawing.Point(12, 172);
+            this.JoystickX_circularProgressBar.MarqueeAnimationSpeed = 2000;
+            this.JoystickX_circularProgressBar.Name = "JoystickX_circularProgressBar";
+            this.JoystickX_circularProgressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.JoystickX_circularProgressBar.OuterMargin = -25;
+            this.JoystickX_circularProgressBar.OuterWidth = 26;
+            this.JoystickX_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
+            this.JoystickX_circularProgressBar.ProgressWidth = 8;
+            this.JoystickX_circularProgressBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.JoystickX_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.JoystickX_circularProgressBar.Size = new System.Drawing.Size(80, 80);
+            this.JoystickX_circularProgressBar.StartAngle = 268;
+            this.JoystickX_circularProgressBar.Step = 1;
+            this.JoystickX_circularProgressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickX_circularProgressBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
+            this.JoystickX_circularProgressBar.SubscriptText = "";
+            this.JoystickX_circularProgressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.JoystickX_circularProgressBar.SuperscriptMargin = new System.Windows.Forms.Padding(0, 35, 0, 0);
+            this.JoystickX_circularProgressBar.SuperscriptText = "";
+            this.JoystickX_circularProgressBar.TabIndex = 8;
+            this.JoystickX_circularProgressBar.Text = "x";
+            this.JoystickX_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(0);
+            this.JoystickX_circularProgressBar.Value = 1;
+            // 
             // ServerStatus_panel
             // 
             this.ServerStatus_panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.ServerStatus_panel.Location = new System.Drawing.Point(6, 324);
+            this.ServerStatus_panel.Location = new System.Drawing.Point(6, 305);
             this.ServerStatus_panel.Name = "ServerStatus_panel";
             this.ServerStatus_panel.Size = new System.Drawing.Size(14, 14);
             this.ServerStatus_panel.TabIndex = 7;
             // 
-            // ServerIPandPort_label
+            // label10
             // 
-            this.ServerIPandPort_label.AutoSize = true;
-            this.ServerIPandPort_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerIPandPort_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.ServerIPandPort_label.Location = new System.Drawing.Point(62, 341);
-            this.ServerIPandPort_label.Name = "ServerIPandPort_label";
-            this.ServerIPandPort_label.Size = new System.Drawing.Size(104, 15);
-            this.ServerIPandPort_label.TabIndex = 6;
-            this.ServerIPandPort_label.Text = "192.168.1.1:8000";
-            // 
-            // ServerIP_label
-            // 
-            this.ServerIP_label.AutoSize = true;
-            this.ServerIP_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerIP_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
-            this.ServerIP_label.Location = new System.Drawing.Point(0, 341);
-            this.ServerIP_label.Name = "ServerIP_label";
-            this.ServerIP_label.Size = new System.Drawing.Size(67, 15);
-            this.ServerIP_label.TabIndex = 5;
-            this.ServerIP_label.Text = "Server_IP:";
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.label10.Location = new System.Drawing.Point(0, 322);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(67, 15);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Server_IP:";
             // 
             // label6
             // 
@@ -615,100 +703,38 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Battery Voltage:";
             // 
-            // JoystickX_circularProgressBar
+            // label4
             // 
-            this.JoystickX_circularProgressBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.JoystickX_circularProgressBar.AnimationSpeed = 500;
-            this.JoystickX_circularProgressBar.BackColor = System.Drawing.Color.Transparent;
-            this.JoystickX_circularProgressBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.JoystickX_circularProgressBar.ForeColor = System.Drawing.Color.White;
-            this.JoystickX_circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
-            this.JoystickX_circularProgressBar.InnerMargin = 2;
-            this.JoystickX_circularProgressBar.InnerWidth = -1;
-            this.JoystickX_circularProgressBar.Location = new System.Drawing.Point(12, 172);
-            this.JoystickX_circularProgressBar.MarqueeAnimationSpeed = 2000;
-            this.JoystickX_circularProgressBar.Name = "JoystickX_circularProgressBar";
-            this.JoystickX_circularProgressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.JoystickX_circularProgressBar.OuterMargin = -25;
-            this.JoystickX_circularProgressBar.OuterWidth = 26;
-            this.JoystickX_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
-            this.JoystickX_circularProgressBar.ProgressWidth = 8;
-            this.JoystickX_circularProgressBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.JoystickX_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.JoystickX_circularProgressBar.Size = new System.Drawing.Size(80, 80);
-            this.JoystickX_circularProgressBar.StartAngle = 268;
-            this.JoystickX_circularProgressBar.Step = 1;
-            this.JoystickX_circularProgressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.JoystickX_circularProgressBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
-            this.JoystickX_circularProgressBar.SubscriptText = "";
-            this.JoystickX_circularProgressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.JoystickX_circularProgressBar.SuperscriptMargin = new System.Windows.Forms.Padding(0, 35, 0, 0);
-            this.JoystickX_circularProgressBar.SuperscriptText = "";
-            this.JoystickX_circularProgressBar.TabIndex = 8;
-            this.JoystickX_circularProgressBar.Text = "x";
-            this.JoystickX_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(0);
-            this.JoystickX_circularProgressBar.Value = 1;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.label4.Location = new System.Drawing.Point(0, 341);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(79, 15);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "Server_Port:";
             // 
-            // JoystickY_circularProgressBar
+            // ServerPort_label
             // 
-            this.JoystickY_circularProgressBar.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
-            this.JoystickY_circularProgressBar.AnimationSpeed = 500;
-            this.JoystickY_circularProgressBar.BackColor = System.Drawing.Color.Transparent;
-            this.JoystickY_circularProgressBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.JoystickY_circularProgressBar.ForeColor = System.Drawing.Color.White;
-            this.JoystickY_circularProgressBar.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
-            this.JoystickY_circularProgressBar.InnerMargin = 2;
-            this.JoystickY_circularProgressBar.InnerWidth = -1;
-            this.JoystickY_circularProgressBar.Location = new System.Drawing.Point(98, 172);
-            this.JoystickY_circularProgressBar.MarqueeAnimationSpeed = 2000;
-            this.JoystickY_circularProgressBar.Name = "JoystickY_circularProgressBar";
-            this.JoystickY_circularProgressBar.OuterColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.JoystickY_circularProgressBar.OuterMargin = -25;
-            this.JoystickY_circularProgressBar.OuterWidth = 26;
-            this.JoystickY_circularProgressBar.ProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(162)))), ((int)(((byte)(249)))));
-            this.JoystickY_circularProgressBar.ProgressWidth = 8;
-            this.JoystickY_circularProgressBar.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.JoystickY_circularProgressBar.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.JoystickY_circularProgressBar.Size = new System.Drawing.Size(80, 80);
-            this.JoystickY_circularProgressBar.StartAngle = 268;
-            this.JoystickY_circularProgressBar.Step = 1;
-            this.JoystickY_circularProgressBar.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.JoystickY_circularProgressBar.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
-            this.JoystickY_circularProgressBar.SubscriptText = "";
-            this.JoystickY_circularProgressBar.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
-            this.JoystickY_circularProgressBar.SuperscriptMargin = new System.Windows.Forms.Padding(0, 35, 0, 0);
-            this.JoystickY_circularProgressBar.SuperscriptText = "";
-            this.JoystickY_circularProgressBar.TabIndex = 9;
-            this.JoystickY_circularProgressBar.Text = "y";
-            this.JoystickY_circularProgressBar.TextMargin = new System.Windows.Forms.Padding(0);
-            this.JoystickY_circularProgressBar.Value = 1;
+            this.ServerPort_label.AutoSize = true;
+            this.ServerPort_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerPort_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.ServerPort_label.Location = new System.Drawing.Point(80, 341);
+            this.ServerPort_label.Name = "ServerPort_label";
+            this.ServerPort_label.Size = new System.Drawing.Size(103, 15);
+            this.ServerPort_label.TabIndex = 28;
+            this.ServerPort_label.Text = "8000, 1234, 1000";
             // 
-            // label1
+            // ServerIP_label
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(64, 152);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 19);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Joystick";
-            // 
-            // panel11
-            // 
-            this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
-            this.panel11.Location = new System.Drawing.Point(71, 259);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(50, 3);
-            this.panel11.TabIndex = 25;
-            // 
-            // panel12
-            // 
-            this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(52)))), ((int)(((byte)(64)))));
-            this.panel12.Location = new System.Drawing.Point(71, 137);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(50, 3);
-            this.panel12.TabIndex = 26;
+            this.ServerIP_label.AutoSize = true;
+            this.ServerIP_label.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerIP_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(161)))), ((int)(((byte)(176)))));
+            this.ServerIP_label.Location = new System.Drawing.Point(80, 322);
+            this.ServerIP_label.Name = "ServerIP_label";
+            this.ServerIP_label.Size = new System.Drawing.Size(72, 15);
+            this.ServerIP_label.TabIndex = 29;
+            this.ServerIP_label.Text = "192.168.1.1";
             // 
             // MainForm
             // 
@@ -777,8 +803,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label LowPower_label;
         private System.Windows.Forms.Label AlarmLED_label;
-        private System.Windows.Forms.Label ServerIPandPort_label;
-        private System.Windows.Forms.Label ServerIP_label;
+        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label AudioEn_label;
         private System.Windows.Forms.Label GrayEn_label;
         private System.Windows.Forms.Label label9;
@@ -794,6 +819,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Label ServerIP_label;
+        private System.Windows.Forms.Label ServerPort_label;
+        private System.Windows.Forms.Label label4;
     }
 }
 

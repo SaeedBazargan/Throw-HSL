@@ -115,6 +115,7 @@
     <Compile Include="Controller\ControllerBase.cs" />
     <Compile Include="Controller\IP_Configs.cs" />
     <Compile Include="Controller\JoystickController.cs" />
+    <Compile Include="Controller\ServerConfig.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

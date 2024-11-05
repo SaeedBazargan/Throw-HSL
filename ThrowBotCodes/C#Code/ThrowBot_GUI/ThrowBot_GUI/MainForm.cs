@@ -10,31 +10,37 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using ThrowBot_GUI.Controller;
+using System.Threading;
 
 
 namespace ThrowBot_GUI
 {
     public partial class MainForm : Form
     {
-        private readonly int serverPort = 8000;
-        private readonly IP_Configs ip_Configs;
+        private readonly CancellationTokenSource cancellationTokenSource;
 
-        private readonly JoystickController joystick;
 
-        private readonly DataController dataController;
+        //private readonly int serverPort = 8000;
+        //private readonly IP_Configs ip_Configs;
+
+        //private readonly JoystickController joystick;
+
+        //private readonly DataController dataController;
 
         public MainForm()
         {
             InitializeComponent();
 
-            dataController = new DataController();
+            cancellationTokenSource = new CancellationTokenSource();
 
-            ip_Configs = new IP_Configs(serverPort, ServerStatus_panel, Main_pictureBox);
-            ip_Configs.DisplayServerIP(ServerIPandPort_label);
-            ip_Configs.StartTcpServer();
+            //dataController = new DataController();
 
-            joystick = new JoystickController();
-            joystick.Initialize();
+            //ip_Configs = new IP_Configs(serverPort, ServerStatus_panel, Main_pictureBox);
+            //ip_Configs.DisplayServerIP(ServerIPandPort_label);
+            //ip_Configs.StartTcpServer();
+
+            //joystick = new JoystickController();
+            //joystick.Initialize();
             //joystick.Start();
         }
 

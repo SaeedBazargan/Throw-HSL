@@ -5,13 +5,15 @@ import struct
 import time
 
 class CameraClient:
-    def __init__(self, server_ip, server_port, camera_index=0):
+    def __init__(self, server_ip, camera_port, message_port, camera_index=0):
         self.server_ip = server_ip
-        self.server_port = server_port
+        self.camera_port = camera_port
+        self.message_port = message_port
         self.camera_index = camera_index
         self.camera = None
         self.running = True
-        self.conn = None
+        self.camera_conn = None
+        self.message_conn = None
         self.cameraMode = 1
 
     def open_camera(self):
@@ -28,7 +30,7 @@ class CameraClient:
             self.camera.release()
             self.camera = None
 
-    def send_frame(self, conn):
+    def send_frame(self):
         while self.running:
             if self.cameraMode == 0:
                 self.release_camera()
@@ -52,56 +54,63 @@ class CameraClient:
                 frame_data = encoded_frame.tobytes()
 
                 # Send the length of the data first, then the data itself
-                conn.sendall(struct.pack("L", len(frame_data)))  # Send frame size
-                conn.sendall(frame_data)  # Send frame data
+                self.camera_conn.sendall(struct.pack("L", len(frame_data)))  # Send frame size
+                self.camera_conn.sendall(frame_data)  # Send frame data
 
             time.sleep(0.1)
 
-    def receive_messages(self, conn):
+    def receive_messages(self):
         while self.running:
             try:
-                response = conn.recv(1024).decode()
+                response = self.message_conn.recv(1024).decode()
                 print(f"receive_messages: {response}")
 
                 if response == "MRL?":
                     handshake_message = "HSL!"
-                    self.send_messages(conn, handshake_message)
+                    self.send_messages(handshake_message)
                 elif response == "12346":
-                    self.send_messages(conn, "987654")
+                    self.send_messages("987654")
                 else:
                     print("\nHand-Shake has not happened.\n\n\n")
-                    self.conn.close()
+                    self.message_conn.close()
                     self.release_camera()
 
             except Exception as e:
                 print(f"Error receiving message: {e}")
                 break
 
-    def send_messages(self, conn, message):
-        conn.sendall(message.encode())
+    def send_messages(self, message):
+        self.message_conn.sendall(message.encode())
         print(f'Sent: {message}')
 
     def start(self):
-        self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.conn.connect((self.server_ip, self.server_port))
+        # Connect to the camera streaming server
+        self.camera_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.camera_conn.connect((self.server_ip, self.camera_port))
+
+        # Connect to the messaging server
+        self.message_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.message_conn.connect((self.server_ip, self.message_port))
 
         # Start the threads for sending frames and receiving messages
-        self.send_thread = threading.Thread(target=self.send_frame, args=(self.conn,))
+        self.send_thread = threading.Thread(target=self.send_frame)
         self.send_thread.start()
 
-        self.receive_thread = threading.Thread(target=self.receive_messages, args=(self.conn,))
+        self.receive_thread = threading.Thread(target=self.receive_messages)
         self.receive_thread.start()
 
         self.send_thread.join()
         self.receive_thread.join()
 
-        self.conn.close()
+        self.camera_conn.close()
+        self.message_conn.close()
         self.release_camera()
 
 if __name__ == "__main__":
     server_ip = '192.168.60.181'
-    server_port = 8000
-    cameraClient = CameraClient(server_ip, server_port)
+    camera_port = 8000
+    message_port = 1234  # Use a different port for messaging
+    cameraClient = CameraClient(server_ip, camera_port, message_port)
 
     if cameraClient.open_camera():
         cameraClient.start()
