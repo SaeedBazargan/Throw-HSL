@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenCvSharp.Flann;
 using SharpDX;
 using SharpDX.DirectInput;
 using static System.Windows.Forms.AxHost;
@@ -32,9 +33,8 @@ namespace ThrowBot_GUI.Controller
                 return;
             }
 
-            // Initialize joystick with the found GUID
-            _joystick = new Joystick(directInput, joystickGuid);
-            Console.WriteLine("Joystick found and initialized.");
+            _cancellationTokenSource = new CancellationTokenSource();
+            USB_JoystickTask = Task.Factory.StartNew(() => Start(), _cancellationTokenSource.Token);
         }
 
         private Guid GetJoystickGuid()
@@ -42,39 +42,41 @@ namespace ThrowBot_GUI.Controller
             foreach (var deviceInstance in directInput.GetDevices(DeviceType.Gamepad, DeviceEnumerationFlags.AllDevices))
                 return deviceInstance.InstanceGuid;
 
-            // If Gamepad not found, look for a Joystick
-            foreach (var deviceInstance in directInput.GetDevices(DeviceType.Joystick, DeviceEnumerationFlags.AllDevices))
-                return deviceInstance.InstanceGuid;
+            if (joystickGuid == Guid.Empty)
+                // If Gamepad not found, look for a Joystick
+                foreach (var deviceInstance in directInput.GetDevices(DeviceType.Joystick, DeviceEnumerationFlags.AllDevices))
+                    return deviceInstance.InstanceGuid;
 
-            // Return empty if no joystick was found
             return Guid.Empty;
         }
 
-        public void Start()
+        private async Task Start()
         {
-            if (joystickGuid == Guid.Empty)
+            DataController dataController = new DataController();
+
+            try
             {
-                Console.WriteLine("Cannot start: Joystick not initialized.");
-                return;
+                _joystick = new Joystick(directInput, joystickGuid);
+                Console.WriteLine("Joystick found and initialized.");
+                
+                _joystick.Properties.AxisMode = DeviceAxisMode.Absolute;
+
+                _joystick.Acquire();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No joystick/Gamepad found!");
             }
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            var token = _cancellationTokenSource.Token;
-
-            USB_JoystickTask = Task.Run(async () =>
+            while (true)
             {
-                while (!token.IsCancellationRequested)
+                try
                 {
-                    DataController dataController = new DataController();
-                    if (dataController.isRunning == true)
-                    {
-                        _joystick.Poll();
-                        var joystickState = _joystick.GetCurrentState();
-
-                        await dataController.StartJoystick(joystickState.Buttons);
-                    }
+                    var joystickState = _joystick.GetCurrentState();
+                    await dataController.StartJoystick(joystickState);
                 }
-            }, token);
+                catch (Exception e) { }
+            }
         }
     }
 }

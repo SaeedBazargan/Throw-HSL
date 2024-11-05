@@ -27,15 +27,15 @@ namespace ThrowBot_GUI
         {
             InitializeComponent();
 
-            ip_Configs = new IP_Configs();
-            ip_Configs.DisplayServerIP(ServerIPandPort_label, serverPort);
-            ip_Configs.StartTcpServer(serverPort, ServerStatus_panel, Main_pictureBox);
+            dataController = new DataController();
+
+            ip_Configs = new IP_Configs(serverPort, ServerStatus_panel, Main_pictureBox);
+            ip_Configs.DisplayServerIP(ServerIPandPort_label);
+            ip_Configs.StartTcpServer();
 
             joystick = new JoystickController();
             joystick.Initialize();
-            joystick.Start();
-
-            dataController = new DataController();
+            //joystick.Start();
         }
 
         private void Exit_pictureBox_Click(object sender, EventArgs e)

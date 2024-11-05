@@ -66,8 +66,12 @@ class CameraClient:
                 if response == "MRL?":
                     handshake_message = "HSL!"
                     self.send_messages(conn, handshake_message)
+                elif response == "12346":
+                    self.send_messages(conn, "987654")
                 else:
                     print("\nHand-Shake has not happened.\n\n\n")
+                    self.conn.close()
+                    self.release_camera()
 
             except Exception as e:
                 print(f"Error receiving message: {e}")

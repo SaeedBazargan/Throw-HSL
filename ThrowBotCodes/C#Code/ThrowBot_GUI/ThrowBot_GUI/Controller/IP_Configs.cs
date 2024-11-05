@@ -17,12 +17,23 @@ namespace ThrowBot_GUI.Controller
         private TcpListener _listener;
         string serverIP;
 
+        private int portNumber;
+        private Panel _serverStatus_panel;
+        private PictureBox _main_pictureBox;
+
         private CancellationTokenSource _cancellationTokenSource;
 
-        public void DisplayServerIP(Label serverIP_Port_label, int port)
+        public IP_Configs(int port, Panel serverStatus_panel, PictureBox main_pictureBox)
+        {
+            portNumber = port;
+            _serverStatus_panel = serverStatus_panel;
+            _main_pictureBox = main_pictureBox;
+        }
+
+        public void DisplayServerIP(Label serverIP_Port_label)
         {
             serverIP = GetLocalIPAddress();
-            string text = (serverIP == "0" ? "IP not found." : $"{serverIP}:{port}");
+            string text = (serverIP == "0" ? "IP not found." : $"{serverIP}:{portNumber}");
             ChangeLabel(serverIP_Port_label, text);
         }
 
@@ -39,9 +50,9 @@ namespace ThrowBot_GUI.Controller
             return "0";
         }
 
-        public async void StartTcpServer(int port, Panel serverStatus_panel, PictureBox main_pictureBox)
+        public async void StartTcpServer()
         {
-            _listener = new TcpListener(IPAddress.Parse(serverIP), port);
+            _listener = new TcpListener(IPAddress.Parse(serverIP), portNumber);
             _listener.Start();
 
             _cancellationTokenSource = new CancellationTokenSource();
@@ -52,22 +63,20 @@ namespace ThrowBot_GUI.Controller
                     var client = await _listener.AcceptTcpClientAsync();
                     if (client != null)
                     {
-                        ChangePanel(serverStatus_panel, "Green"); // Green for Connect
-
                         DataController dataController = new DataController();
-                        await dataController.Initialize(client, main_pictureBox, serverStatus_panel);
+                        await dataController.Initialize(client, _main_pictureBox, _serverStatus_panel);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
-                ChangePanel(serverStatus_panel, "Red"); // Red for Disconnect
+                ChangePanel(_serverStatus_panel, "Red"); // Red for Disconnect
             }
             finally
             {
                 StopTcpServer();
-                ChangePanel(serverStatus_panel, "Red"); // Red for Disconnect
+                ChangePanel(_serverStatus_panel, "Red"); // Red for Disconnect
             }
         }
 
