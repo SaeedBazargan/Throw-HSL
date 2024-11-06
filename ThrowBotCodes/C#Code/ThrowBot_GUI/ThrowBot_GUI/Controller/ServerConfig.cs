@@ -11,6 +11,7 @@ namespace ThrowBot_GUI.Controller
 {
     public class ServerConfig : ControllerBase
     {
+        private bool _isSend;
         private string _serverIP;
         private readonly int _cameraPort;
         private readonly int _messagePort;
@@ -24,6 +25,7 @@ namespace ThrowBot_GUI.Controller
 
         public ServerConfig(int messagePort, int cameraPort, Label serverIPLabel, Label serverPortLabel, Panel serverStatusPanel, CancellationTokenSource cancellationTokenSource)
         {
+            _isSend = true;
             _cameraPort = cameraPort;
             _messagePort = messagePort;
             _serverIPLabel = serverIPLabel;
@@ -112,43 +114,45 @@ namespace ThrowBot_GUI.Controller
                 Console.WriteLine("Server operation canceled.");
                 ChangePanel(_serverStatusPanel, "Red"); // Red for Disconnect
             }
-            //finally
-            //{
-            //    messageListener.Stop();
-            //}
         }
 
         public string SendMessage(string message)
         {
-            try
+            if (_isSend)
             {
-                if (_connectedClient != null && _connectedClient.Connected)
+                try
                 {
-                    var stream = _connectedClient.GetStream();
+                    if (_connectedClient != null && _connectedClient.Connected)
+                    {
+                        var stream = _connectedClient.GetStream();
+                        _isSend = false;
 
-                    byte[] data = Encoding.UTF8.GetBytes(message);
-                    stream.Write(data, 0, data.Length);
-                    Console.WriteLine($"Sent: {message}");
+                        byte[] data = Encoding.UTF8.GetBytes(message);
+                        stream.Write(data, 0, data.Length);
+                        Console.WriteLine($"Sent: {message}");
 
-                    // Wait for a response from the client
-                    byte[] buffer = new byte[1024];
-                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                    string response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine($"Received: {response}");
+                        // Wait for a response from the client
+                        byte[] buffer = new byte[1024];
+                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                        string response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                        Console.WriteLine($"Received: {response}");
+                        _isSend = true;
 
-                    return response;
+                        return response;
+                    }
+                    else
+                    {
+                        Console.WriteLine("No client is connected to send the message.");
+                        return null;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("No client is connected to send the message.");
+                    Console.WriteLine($"Error sending message: {ex.Message}");
                     return null;
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error sending message: {ex.Message}");
-                return null;
-            }
+            return null;
         }
     }
 }
