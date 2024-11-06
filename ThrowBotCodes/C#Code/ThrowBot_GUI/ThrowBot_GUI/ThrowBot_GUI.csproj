@@ -111,9 +111,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\CameraConfig.cs" />
     <Compile Include="Controller\DataController.cs" />
     <Compile Include="Controller\ControllerBase.cs" />
     <Compile Include="Controller\IP_Configs.cs" />
+    <Compile Include="Controller\JoystickConfig.cs" />
     <Compile Include="Controller\JoystickController.cs" />
     <Compile Include="Controller\ServerConfig.cs" />
     <Compile Include="MainForm.cs">
