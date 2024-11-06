@@ -74,6 +74,9 @@ class CameraClient:
                         self.send_messages("987654")
                     else:
                         print("Unexpected response.")
+                        self.message_conn.close()
+                        self.camera_conn.close()
+                        self.release_camera()
 
                     time.sleep(2)  # Retry delay
             except Exception as e:
