@@ -1,8 +1,11 @@
-﻿using System;
+﻿using OpenCvSharp.Extensions;
+using OpenCvSharp;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,14 +20,15 @@ namespace ThrowBot_GUI.Controller
         private TcpClient _cameraClient;
         private Task _cameraListenerTask;
         private Task _cameraStreamTask;
+        private TcpClient _connectedClient;
         private readonly PictureBox _mainPictureBox;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         public CameraConfig(PictureBox mainPictureBox, int cameraPort, string serverIP, CancellationTokenSource cancellationTokenSource)
         {
-            _mainPictureBox = mainPictureBox;
-            _cameraPort = cameraPort;
             _serverIP = serverIP;
+            _cameraPort = cameraPort;
+            _mainPictureBox = mainPictureBox;
             _cancellationTokenSource = cancellationTokenSource;
         }
 
@@ -34,7 +38,7 @@ namespace ThrowBot_GUI.Controller
             {
                 _cameraListener = new TcpListener(IPAddress.Parse(_serverIP), _cameraPort);
                 _cameraListener.Start();
-                _cameraListenerTask = Task.Factory.StartNew(() => ListenForCameraClients(), _cancellationTokenSource.Token);
+                _cameraListenerTask = Task.Factory.StartNew(() => CameraCapture(_cameraListener), _cancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -42,78 +46,65 @@ namespace ThrowBot_GUI.Controller
             }
         }
 
-        private async Task ListenForCameraClients()
+        private async Task CameraCapture(TcpListener cameraListener)
         {
             try
             {
                 while (!_cancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    Console.WriteLine("Waiting for camera client to connect...");
-                    _cameraClient = await _cameraListener.AcceptTcpClientAsync();
+                    Console.WriteLine("Waiting for a client to connect...");
+                    _connectedClient = await cameraListener.AcceptTcpClientAsync();
 
-                    if (_cameraClient != null && _cameraClient.Connected)
+                    try
                     {
-                        Console.WriteLine("Camera client connected.");
-                        // Start the camera stream task
-                        _cameraStreamTask = Task.Factory.StartNew(() => StreamCameraImages(_cameraClient), _cancellationTokenSource.Token);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Failed to connect to camera client.");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while listening for camera clients: {ex.Message}");
-            }
-        }
-
-        private async Task StreamCameraImages(TcpClient cameraClient)
-        {
-            try
-            {
-                var stream = cameraClient.GetStream();
-                while (!_cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    // Read the incoming image byte data from the client stream
-                    byte[] buffer = new byte[1024 * 1024]; // Buffer size (adjust as needed)
-                    int bytesRead;
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                        if (_connectedClient != null && _connectedClient.Connected)
                         {
-                            ms.Write(buffer, 0, bytesRead);
+                            var stream = _connectedClient.GetStream();
+                            byte[] sizeBuffer = new byte[4];  // Buffer to store frame size
+
+                            while (!_cancellationTokenSource.Token.IsCancellationRequested)
+                            {
+                                // Read the frame size first
+                                int bytesRead = await stream.ReadAsync(sizeBuffer, 0, sizeBuffer.Length);
+                                if (bytesRead == 0)
+                                    break;
+
+                                int frameSize = BitConverter.ToInt32(sizeBuffer, 0);  // Convert the size to integer
+                                byte[] frameBuffer = new byte[frameSize];
+                                int totalBytesRead = 0;
+
+                                // Read the actual frame data based on the size
+                                while (totalBytesRead < frameSize)
+                                {
+                                    int read = await stream.ReadAsync(frameBuffer, totalBytesRead, frameSize - totalBytesRead);
+                                    if (read == 0)
+                                        break;
+                                    totalBytesRead += read;
+                                }
+
+                                if (totalBytesRead == frameSize)
+                                {
+                                    Mat frame = Cv2.ImDecode(frameBuffer, ImreadModes.Color);
+
+                                    if (frame != null && !frame.Empty())
+                                    {
+                                        Bitmap bitmap = BitmapConverter.ToBitmap(frame);
+                                        ChangePictureBox(_mainPictureBox, bitmap);  // Update PictureBox with the new frame
+                                    }
+                                }
+                            }
                         }
-
-                        // Convert the byte array to a Bitmap
-                        Bitmap bitmap = new Bitmap(ms);
-
-                        // Display the Bitmap in the PictureBox
-                        _mainPictureBox.Invoke(new Action(() =>
-                        {
-                            _mainPictureBox.Image = bitmap;
-                        }));
                     }
-
-                    // Adjust this delay as necessary to control frame rate
-                    await Task.Delay(100, _cancellationTokenSource.Token); // 100ms delay between frames
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error streaming camera images: {ex.Message}");
+                Console.WriteLine($"Server operation canceled. Reason: {ex.Message}");
             }
-            finally
-            {
-                cameraClient.Close();
-                Console.WriteLine("Camera client disconnected.");
-            }
-        }
-
-        public void Stop()
-        {
-            _cameraListener?.Stop();
         }
     }
 }

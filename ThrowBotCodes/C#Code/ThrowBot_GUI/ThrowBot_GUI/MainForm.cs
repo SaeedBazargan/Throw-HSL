@@ -31,8 +31,8 @@ namespace ThrowBot_GUI
             joystick_Configs = new JoystickConfig(cancellationTokenSource, SendMessage);
             joystick_Configs.Initialize();
 
-            //camera_Configs = new CameraConfig(Main_pictureBox, cameraPort, serverIP, cancellationTokenSource);
-            //camera_Configs.Start();
+            camera_Configs = new CameraConfig(Main_pictureBox, cameraPort, serverIP, cancellationTokenSource);
+            camera_Configs.Start();
         }
 
         private void Exit_pictureBox_Click(object sender, EventArgs e)

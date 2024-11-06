@@ -3,6 +3,7 @@ import socket
 import threading
 import struct
 import time
+import pickle
 
 class CameraClient:
     def __init__(self, server_ip, camera_port, message_port, camera_index=0):
@@ -30,7 +31,7 @@ class CameraClient:
             self.camera.release()
             self.camera = None
 
-    def send_frame(self):
+    def send_frame(self, conn):
         while self.running:
             if self.cameraMode == 0:
                 self.release_camera()
@@ -44,43 +45,40 @@ class CameraClient:
                 if self.cameraMode == 1:
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
+                # Encode the frame as JPEG
                 result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
                 if not result:
                     print("Error: Could not encode frame.")
                     continue
 
+                # Convert encoded frame to bytes
                 frame_data = encoded_frame.tobytes()
 
-                try:
-                    # Send frame size (as 8-byte long integer) and frame data
-                    self.camera_conn.sendall(struct.pack("Q", len(frame_data)))  # Use 'Q' for 8-byte long
-                    self.camera_conn.sendall(frame_data)
-                except socket.error as e:
-                    print(f"Error sending frame: {e}")
-                    break
+                # Send the length of the data first, then the data itself
+                conn.sendall(struct.pack("L", len(frame_data)))  # Send frame size
+                conn.sendall(frame_data)  # Send frame data
 
             time.sleep(0.1)
 
     def receive_messages(self):
         while self.running:
-            # try:
-            # Continuous handshake loop
-            # while True:
-            response = self.message_conn.recv(1024).decode()
-            # print(f"receive_messages: {response}")
+            try:
+                # Continuous handshake loop
+                while True:
+                    response = self.message_conn.recv(1024).decode()
+                    print(f"receive_messages: {response}")
 
-            if response == "MRL?":
-                self.send_messages("HSL!")
-            elif response == "12346":
-                self.send_messages("987654")
-            else:
-                continue
-            #     print("Unexpected response.")
+                    if response == "MRL?":
+                        self.send_messages("HSL!")
+                    elif response == "12346":
+                        self.send_messages("987654")
+                    else:
+                        print("Unexpected response.")
 
-            time.sleep(2)  # Retry delay
-            # except Exception as e:
-            #     print(f"Error receiving message: {e}")
-            #     break
+                    time.sleep(2)  # Retry delay
+            except Exception as e:
+                print(f"Error receiving message: {e}")
+                break
 
     def send_messages(self, message):
         self.message_conn.sendall(message.encode())
@@ -104,12 +102,12 @@ class CameraClient:
         self.receive_thread.start()
 
         # Start sending frames thread
-        # self.send_frame_thread = threading.Thread(target=self.send_frame)
-        # self.send_frame_thread.start()
+        self.send_frame_thread = threading.Thread(target=self.send_frame, args=(self.camera_conn,))
+        self.send_frame_thread.start()
 
         # Wait for threads to finish
         self.receive_thread.join()
-        # self.send_frame_thread.join()
+        self.send_frame_thread.join()
 
         self.message_conn.close()
         self.camera_conn.close()
