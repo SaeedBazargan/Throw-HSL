@@ -131,7 +131,6 @@ namespace ThrowBot_GUI.Controller
                         stream.Write(data, 0, data.Length);
                         Console.WriteLine($"Sent: {message}");
 
-                        // Wait for a response from the client
                         byte[] buffer = new byte[1024];
                         int bytesRead = stream.Read(buffer, 0, buffer.Length);
                         string response = Encoding.UTF8.GetString(buffer, 0, bytesRead);

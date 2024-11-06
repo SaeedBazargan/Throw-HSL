@@ -90,6 +90,9 @@ namespace ThrowBot_GUI.Controller
             //joystickState.Buttons[1]    Button_2
             //joystickState.Buttons[2]    Button_3
             //joystickState.Buttons[3]    Button_4
+            //joystickState.Buttons[4]    Button_L1
+            //joystickState.Buttons[7]    Button_R2
+            //joystickState.Buttons[9]    Start Button
 
             //joystickState.X     Left-Shock -> X
             //joystickState.Y     Left-Shock -> Y

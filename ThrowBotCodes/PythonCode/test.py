@@ -45,16 +45,13 @@ class CameraClient:
                 if self.cameraMode == 1:
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-                # Encode the frame as JPEG
                 result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
                 if not result:
                     print("Error: Could not encode frame.")
                     continue
 
-                # Convert encoded frame to bytes
                 frame_data = encoded_frame.tobytes()
 
-                # Send the length of the data first, then the data itself
                 conn.sendall(struct.pack("L", len(frame_data)))  # Send frame size
                 conn.sendall(frame_data)  # Send frame data
 
@@ -63,7 +60,6 @@ class CameraClient:
     def receive_messages(self):
         while self.running:
             try:
-                # Continuous handshake loop
                 while True:
                     response = self.message_conn.recv(1024).decode()
                     print(f"receive_messages: {response}")
@@ -89,26 +85,21 @@ class CameraClient:
 
     def start(self):
         try:
-            # Initialize connection for message communication
             self.message_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.message_conn.connect((self.server_ip, self.message_port))
 
-            # Initialize connection for camera frame transmission
             self.camera_conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.camera_conn.connect((self.server_ip, self.camera_port))
         except socket.error as e:
             print(f"Socket connection error: {e}")
             return
 
-        # Start receiving messages thread
         self.receive_thread = threading.Thread(target=self.receive_messages)
         self.receive_thread.start()
 
-        # Start sending frames thread
         self.send_frame_thread = threading.Thread(target=self.send_frame, args=(self.camera_conn,))
         self.send_frame_thread.start()
 
-        # Wait for threads to finish
         self.receive_thread.join()
         self.send_frame_thread.join()
 
