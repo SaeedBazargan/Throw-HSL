@@ -108,7 +108,7 @@ class CameraClient:
         self.release_camera()
 
 if __name__ == "__main__":
-    server_ip = '192.168.60.181'
+    server_ip = '192.168.1.5'
     camera_port = 8000
     message_port = 1234
     cameraClient = CameraClient(server_ip, camera_port, message_port)

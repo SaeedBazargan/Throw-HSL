@@ -24,15 +24,15 @@ namespace ThrowBot_GUI
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            //server_Configs = new ServerConfig(messagePort, cameraPort, ServerIP_label, ServerPort_label, ServerStatus_panel, cancellationTokenSource);
-            //serverIP = server_Configs.DisplayServerIP_Port();
-            //server_Configs.Start();
+            server_Configs = new ServerConfig(messagePort, cameraPort, ServerIP_label, ServerPort_label, ServerStatus_panel, cancellationTokenSource);
+            serverIP = server_Configs.DisplayServerIP_Port();
+            server_Configs.Start();
 
             joystick_Configs = new JoystickConfig(cancellationTokenSource, SendMessage);
             joystick_Configs.Initialize();
 
-            //camera_Configs = new CameraConfig(Main_pictureBox, cameraPort, serverIP, cancellationTokenSource);
-            //camera_Configs.Start();
+            camera_Configs = new CameraConfig(Main_pictureBox, cameraPort, serverIP, cancellationTokenSource);
+            camera_Configs.Start();
         }
 
         private void Exit_pictureBox_Click(object sender, EventArgs e)
