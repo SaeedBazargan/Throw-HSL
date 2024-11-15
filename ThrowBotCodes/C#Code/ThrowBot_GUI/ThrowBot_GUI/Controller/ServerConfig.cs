@@ -85,7 +85,8 @@ namespace ThrowBot_GUI.Controller
                     if (_connectedClient != null && _connectedClient.Connected)
                     {
                         var responseMessage = "MRL?";
-                        while (_connectedClient.Connected && !_cancellationTokenSource.Token.IsCancellationRequested)
+                        //while
+                        if (_connectedClient.Connected && !_cancellationTokenSource.Token.IsCancellationRequested)
                         {
                             var message = SendMessage(responseMessage);
 
@@ -100,7 +101,7 @@ namespace ThrowBot_GUI.Controller
                                 ChangePanel(_serverStatusPanel, "Red"); // Red for Disconnect
                             }
 
-                            await Task.Delay(2000, _cancellationTokenSource.Token);
+                            await Task.Delay(100, _cancellationTokenSource.Token);
                         }
                     }
                     else

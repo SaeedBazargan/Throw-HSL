@@ -5,7 +5,10 @@ import struct
 import time
 import pickle
 import serial
+# from gpiozero import LED
 
+# <---- ------------------------------------------------------- ---->
+# led = LED(17)
 # <---- ------------------------------------------------------- ---->
 Forward_LowSpeed = [
     b'\xFF\xFF\x01\x05\x03\x20\x00\xFA\xFF',
@@ -59,6 +62,11 @@ Leftward_HighSpeed = [
     b'\xFF\xFF\x02\x05\x03\x20\x03\xE8\xFF'
 ]
 # <---- ------------------------------------------------------- ---->
+Stop_Dynamixel = [
+    b'\xFF\xFF\x01\x05\x03\x20\x00\x00\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x00\x00\xFF'
+]
+# <---- ------------------------------------------------------- ---->
 
 class CameraClient:
     def __init__(self, server_ip, camera_port, message_port, camera_index=0):
@@ -71,6 +79,8 @@ class CameraClient:
         self.camera_conn = None
         self.message_conn = None
         self.cameraMode = 1
+        self.Speed = 0
+        self.Gray_En = 0
 
     def open_camera(self):
         if self.camera is None or not self.camera.isOpened():
@@ -96,11 +106,13 @@ class CameraClient:
                 if not ret:
                     print("Error: Could not read frame.")
                     continue
-
-                if self.cameraMode == 1:
+                if self.Gray_En == 1:
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-                result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+                    # To send grayscale image, we should encode it properly
+                    result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+                else:
+                    # No need to convert back to BGR
+                    result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
                 if not result:
                     print("Error: Could not encode frame.")
                     continue
@@ -113,8 +125,6 @@ class CameraClient:
             time.sleep(0.1)
 
     def receive_messages(self):
-        global Speed
-        Speed = 0
         while self.running:
             if not ser.is_open:
                 ser.open()
@@ -123,43 +133,140 @@ class CameraClient:
                 while True:
                     response = self.message_conn.recv(1024).decode()
                     print(f"receive_messages: {response}")
+                    # <---- -------------------------------------- ---->
+                    match response:
+                        case "MRL?":
+                            self.send_messages("HSL!")
+                    # <---- -------------------------------------- ---->
+                        case "LowSpeed":
+                            self.Speed = 0
+                            self.send_messages("LowSpeed OK!")
 
-                    if response == "MRL?":
-                        self.send_messages("HSL!")
-                    elif response == "LowSpeed":
-                        Speed = 0
-                    elif response == "MidSpeed":
-                        Speed = 1
-                    elif response == "HighSpeed":
-                        Speed = 2
-                        self.send_messages("OK!")
-                    elif response == "Forward" and Speed == 0:
-                        ser.reset_input_buffer()
-                        for message in Forward_LowSpeed:
-                            ser.write(message)
-                            time.sleep(0.2)
-                        self.send_messages("OK!")
-                    elif response == "Forward" and Speed == 1:
-                        ser.reset_input_buffer()
-                        for message in Forward_MidSpeed:
-                            ser.write(message)
-                            time.sleep(0.2)
-                        self.send_messages("OK!")
-                    elif response == "Forward" and Speed == 2:
-                        ser.reset_input_buffer()
-                        for message in Forward_HighSpeed:
-                            ser.write(message)
-                            time.sleep(0.2)
-                        self.send_messages("OK!")
+                        case "MidSpeed":
+                            self.Speed = 1
+                            self.send_messages("MidSpeed OK!")
 
-                    else:
-                        print("Unexpected response.")
-                        self.message_conn.close()
-                        ser.close()
-                        self.camera_conn.close()
-                        self.release_camera()
+                        case "HighSpeed":
+                            self.Speed = 2
+                            self.send_messages("HighSpeed OK!")
+                    # <---- -------------------------------------- ---->
+                        case "Forward":
+                            if self.Speed == 0:
+                                ser.reset_input_buffer()
+                                for message in Forward_LowSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Forward_LowSpeed OK!")
 
-                    time.sleep(2)  # Retry delay
+                            elif self.Speed == 1:
+                                ser.reset_input_buffer()
+                                for message in Forward_MidSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Forward_MidSpeed OK!")
+
+                            elif self.Speed == 2:
+                                ser.reset_input_buffer()
+                                for message in Forward_HighSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Forward_HighSpeed OK!")
+                    # <---- -------------------------------------- ---->
+                        case "Backward":
+                            if self.Speed == 0:
+                                ser.reset_input_buffer()
+                                for message in Backward_LowSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Backward_LowSpeed OK!")
+
+                            elif self.Speed == 1:
+                                ser.reset_input_buffer()
+                                for message in Backward_MidSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Backward_MidSpeed OK!")
+
+                            elif self.Speed == 2:
+                                ser.reset_input_buffer()
+                                for message in Backward_HighSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Backward_HighSpeed OK!")
+                    # <---- -------------------------------------- ---->
+                        case "Rightward":
+                            if self.Speed == 0:
+                                ser.reset_input_buffer()
+                                for message in Rightward_LowSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Rightward_LowSpeed OK!")
+
+                            elif self.Speed == 1:
+                                ser.reset_input_buffer()
+                                for message in Rightward_MidSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Rightward_MidSpeed OK!")
+                            
+                            elif self.Speed == 2:
+                                ser.reset_input_buffer()
+                                for message in Rightward_HighSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Rightward_HighSpeed OK!")
+                    # <---- -------------------------------------- ---->
+                        case "Leftward":
+                            if self.Speed == 0:
+                                ser.reset_input_buffer()
+                                for message in Leftward_LowSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Leftward_LowSpeed OK!")
+                            
+                            elif self.Speed == 1:
+                                ser.reset_input_buffer()
+                                for message in Leftward_MidSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Leftward_MidSpeed OK!")
+
+                            elif self.Speed == 2:
+                                ser.reset_input_buffer()
+                                for message in Leftward_HighSpeed:
+                                    ser.write(message)
+                                    time.sleep(0.1)
+                                self.send_messages("Leftward_HighSpeed OK!")
+                    # <---- -------------------------------------- ---->
+                        case "Stop_Dynamixel":
+                            ser.reset_input_buffer()
+                            for message in Stop_Dynamixel:
+                                ser.write(message)
+                                time.sleep(0.1)
+                            self.send_messages("Stop_Dynamixel OK!")
+                    # <---- -------------------------------------- ---->
+                        case "Gray_OFF":
+                            self.Gray_En = 0
+                            self.send_messages("Gray Disable OK!")
+                        case "Gray_ON":
+                            self.Gray_En = 1
+                            self.send_messages("Gray Enable OK!")
+                    # <---- -------------------------------------- ---->
+                        case "LED_OFF":
+                            # led.off()
+                            self.send_messages("LED Turn-OFF OK!")
+                        case "LED_ON":
+                            # led.on()
+                            self.send_messages("LED Turn-ON OK!")
+                    # <---- -------------------------------------- ---->
+                        case _:
+                            print("Unexpected response.")
+                            self.message_conn.close()
+                            ser.close()
+                            self.camera_conn.close()
+                            self.release_camera()
+                    # <---- -------------------------------------- ---->
+                    time.sleep(0.1)  # Retry delay
             except Exception as e:
                 print(f"Error receiving message: {e}")
                 break
