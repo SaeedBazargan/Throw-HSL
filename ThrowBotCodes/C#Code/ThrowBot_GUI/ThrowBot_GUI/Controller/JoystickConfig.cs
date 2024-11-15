@@ -20,6 +20,8 @@ namespace ThrowBot_GUI.Controller
 
         private CancellationTokenSource _cancellationTokenSource;
 
+        private byte RobotSpeed = 0;        // Low-Speed
+
         public JoystickConfig(CancellationTokenSource cancellationTokenSource, Func<string, string> sendMessage)
         {
             directInput = new DirectInput();
@@ -101,6 +103,15 @@ namespace ThrowBot_GUI.Controller
             {
                 string response = SendMessage("12346");
                 Console.WriteLine($"Received message: {response}");
+            }
+            else if (joystickState.Buttons[1])
+            {
+                string response = SendMessage("HighSpeed");
+                Console.WriteLine($"Received message: {response}");
+            }
+            else if (joystickState.Buttons[2])
+            {
+                string response = SendMessage("Forward");
             }
             else if (joystickState.Buttons[9]) // Start Button
             {

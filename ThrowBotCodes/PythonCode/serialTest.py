@@ -1,22 +1,75 @@
 import serial
 import time
 
-# Define the values to send
-val = bytearray([0x02, 0x02])
+# <---- ------------------------------------------------------- ---->
+Forward_LowSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x00\xFA\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x04\xFA\xFF'
+]
+Forward_MidSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x01\xF4\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x05\xF4\xFF'
+]
+Forward_HighSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x03\xE8\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x07\xE8\xFF'
+]
+# <---- ------------------------------------------------------- ---->
+Backward_LowSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x04\xFA\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x00\xFA\xFF'
+]
+Backward_MidSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x05\xF4\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x01\xF4\xFF'
+]
+Backward_HighSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x07\xE8\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x03\xE8\xFF'
+]
+# <---- ------------------------------------------------------- ---->
+Rightward_LowSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x04\xFA\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x04\xFA\xFF'
+]
+Rightward_MidSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x05\xF4\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x05\xF4\xFF'
+]
+Rightward_HighSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x07\xE8\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x07\xE8\xFF'
+]
+# <---- ------------------------------------------------------- ---->
+Leftward_LowSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x00\xFA\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x00\xFA\xFF'
+]
+Leftward_MidSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x01\xF4\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x01\xF4\xFF'
+]
+Leftward_HighSpeed = [
+    b'\xFF\xFF\x01\x05\x03\x20\x03\xE8\xFF',
+    b'\xFF\xFF\x02\x05\x03\x20\x03\xE8\xFF'
+]
+# <---- ------------------------------------------------------- ---->
 
-# Set up the serial connection
-ser = serial.Serial('COM6', baudrate=57600, timeout=1)  # Adjust baudrate as needed
-
-# Give some time for the serial port to initialize
+ser = serial.Serial('COM6', baudrate=57600, timeout=1)
 time.sleep(2)
 
 try:
-    # Write the values to the serial port
-    ser.write(val)
-    print("Values sent:", val)
+    if not ser.is_open:
+        ser.open()
+
+    ser.reset_input_buffer()
+
+    for message in Forward_MidSpeed:
+        ser.write(message)
+        time.sleep(0.2)
+
 except serial.SerialException as e:
     print("Error:", e)
-finally:
-    # Close the serial port
-    ser.close()
 
+# finally:
+#     ser.close()
