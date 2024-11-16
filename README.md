@@ -1,2 +1,2 @@
-# Seminar
-Seminar
+# ThrowHSL Robot
+ThrowHSL
