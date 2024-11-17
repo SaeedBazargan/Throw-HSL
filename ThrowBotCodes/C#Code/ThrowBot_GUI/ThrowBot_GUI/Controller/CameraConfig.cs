@@ -69,14 +69,16 @@ namespace ThrowBot_GUI.Controller
                                 if (bytesRead == 0)
                                     break;
 
-                                int frameSize = BitConverter.ToInt32(sizeBuffer, 0);  // Convert the size to integer
+                                Array.Reverse(sizeBuffer);      // Swap bytes from little-endian to big-endian
+
+                                uint frameSize = BitConverter.ToUInt32(sizeBuffer, 0);  // Now read the frame size as an unsigned 32-bit integer
+
                                 byte[] frameBuffer = new byte[frameSize];
                                 int totalBytesRead = 0;
 
-                                // Read the actual frame data based on the size
-                                while (totalBytesRead < frameSize)
+                                while (totalBytesRead < frameSize)      // Read the actual frame data based on the size
                                 {
-                                    int read = await stream.ReadAsync(frameBuffer, totalBytesRead, frameSize - totalBytesRead);
+                                    int read = await stream.ReadAsync(frameBuffer, totalBytesRead, (int)frameSize - totalBytesRead);
                                     if (read == 0)
                                         break;
                                     totalBytesRead += read;
@@ -85,7 +87,6 @@ namespace ThrowBot_GUI.Controller
                                 if (totalBytesRead == frameSize)
                                 {
                                     Mat frame = Cv2.ImDecode(frameBuffer, ImreadModes.Color);
-
                                     if (frame != null && !frame.Empty())
                                     {
                                         Bitmap bitmap = BitmapConverter.ToBitmap(frame);

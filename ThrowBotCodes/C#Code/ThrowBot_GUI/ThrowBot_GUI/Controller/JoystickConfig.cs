@@ -17,7 +17,7 @@ namespace ThrowBot_GUI.Controller
         private Task USB_JoystickTask;
         private DirectInput directInput;
         private Func<string, string> SendMessage;
-        private Label _presentSpeed1_label, _presentSpeed2_label, _grayEn_label, _LED1_label, _LED2_label;
+        private Label _presentSpeed1_label, _presentSpeed2_label, _grayEn_label, _LED1_label, _LED2_label, _pwr_label;
 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -26,10 +26,10 @@ namespace ThrowBot_GUI.Controller
         private bool robotMoving = false;
         private bool grayMode    = false;
         private bool LED_State   = false;
+        private bool PWR_State   = false;
 
 
-
-        public JoystickConfig(CancellationTokenSource cancellationTokenSource, Func<string, string> sendMessage, Label presentSpeed1_label, Label presentSpeed2_label, Label grayEn_label, Label led1_label, Label led2_label)
+        public JoystickConfig(CancellationTokenSource cancellationTokenSource, Func<string, string> sendMessage, Label presentSpeed1_label, Label presentSpeed2_label, Label grayEn_label, Label led1_label, Label led2_label, Label pwr_label)
         {
             directInput = new DirectInput();
             _cancellationTokenSource = cancellationTokenSource;
@@ -39,6 +39,7 @@ namespace ThrowBot_GUI.Controller
             _grayEn_label = grayEn_label;
             _LED1_label = led1_label;
             _LED2_label = led2_label;
+            _pwr_label = pwr_label;
         }
 
         public void Initialize()
@@ -127,7 +128,23 @@ namespace ThrowBot_GUI.Controller
                         break;
                 }
             }
-            else if (joystickState.Buttons[1]) // Button 2 -> LED State
+            else if (joystickState.Buttons[1]) // Button 2 -> PWR State
+            {
+                PWR_State = !PWR_State;
+                Thread.Sleep(500);
+                switch (PWR_State)
+                {
+                    case false:
+                        response = SendMessage("PWR_OFF");
+                        ChangeLabel(_pwr_label, "Enable");
+                        break;
+                    case true:
+                        response = SendMessage("PWR_ON");
+                        ChangeLabel(_pwr_label, "Disable");
+                        break;
+                }
+            }
+            else if (joystickState.Buttons[2]) // Button 3 -> LED State
             {
                 LED_State = !LED_State;
                 Thread.Sleep(500);

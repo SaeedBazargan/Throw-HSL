@@ -5,10 +5,8 @@ import struct
 import time
 import pickle
 import serial
-# from gpiozero import LED
+import RPi.GPIO as GPIO
 
-# <---- ------------------------------------------------------- ---->
-# led = LED(17)
 # <---- ------------------------------------------------------- ---->
 Forward_LowSpeed = [
     b'\xFF\xFF\x01\x05\x03\x20\x00\xFA\xFF',
@@ -67,6 +65,13 @@ Stop_Dynamixel = [
     b'\xFF\xFF\x02\x05\x03\x20\x00\x00\xFF'
 ]
 # <---- ------------------------------------------------------- ---->
+LED_ON = b'\xFF\xFF\x01\x05\x03\x18\x01\x00\xFF'
+# <---- ------------------------------------------------------- ---->
+LED_OFF = b'\xFF\xFF\x01\x05\x03\x18\x00\x00\xFF'
+# <---- ------------------------------------------------------- ---->
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(23, GPIO.OUT, initial=GPIO.HIGH)
+# <---- ------------------------------------------------------- ---->
 
 class CameraClient:
     def __init__(self, server_ip, camera_port, message_port, camera_index=0):
@@ -78,16 +83,15 @@ class CameraClient:
         self.running = True
         self.camera_conn = None
         self.message_conn = None
-        self.cameraMode = 1
         self.Speed = 0
         self.Gray_En = 0
 
     def open_camera(self):
         if self.camera is None or not self.camera.isOpened():
-            self.camera = cv2.VideoCapture(self.camera_index, cv2.CAP_DSHOW)
+            self.camera = cv2.VideoCapture(self.camera_index, cv2.CAP_V4L2)
             self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
             self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-            self.camera.set(cv2.CAP_PROP_FPS, 15)
+            self.camera.set(cv2.CAP_PROP_FPS, 30)
             return True
         return True
 
@@ -98,29 +102,26 @@ class CameraClient:
 
     def send_frame(self, conn):
         while self.running:
-            if self.cameraMode == 0:
-                self.release_camera()
+            self.open_camera()
+            ret, frame = self.camera.read()
+            if not ret:
+                print("Error: Could not read frame.")
+                continue
+            if self.Gray_En == 1:
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                # To send grayscale image, we should encode it properly
+                result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
             else:
-                self.open_camera()
-                ret, frame = self.camera.read()
-                if not ret:
-                    print("Error: Could not read frame.")
-                    continue
-                if self.Gray_En == 1:
-                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    # To send grayscale image, we should encode it properly
-                    result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
-                else:
-                    # No need to convert back to BGR
-                    result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
-                if not result:
-                    print("Error: Could not encode frame.")
-                    continue
+                # No need to convert back to BGR
+                result, encoded_frame = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+            if not result:
+                print("Error: Could not encode frame.")
+                continue
 
-                frame_data = encoded_frame.tobytes()
+            frame_data = encoded_frame.tobytes()
 
-                conn.sendall(struct.pack("L", len(frame_data)))  # Send frame size
-                conn.sendall(frame_data)  # Send frame data
+            conn.sendall(struct.pack("!I", len(frame_data)))  # Send frame size
+            conn.sendall(frame_data)  # Send frame data
 
             time.sleep(0.1)
 
@@ -253,11 +254,18 @@ class CameraClient:
                             self.send_messages("Gray Enable OK!")
                     # <---- -------------------------------------- ---->
                         case "LED_OFF":
-                            # led.off()
+                            ser.write(LED_OFF)
                             self.send_messages("LED Turn-OFF OK!")
                         case "LED_ON":
-                            # led.on()
+                            ser.write(LED_ON)
                             self.send_messages("LED Turn-ON OK!")
+                    # <---- -------------------------------------- ---->
+                        case "PWR_OFF":
+                            GPIO.output(23, GPIO.HIGH)
+                            self.send_messages("PWR Turn-OFF OK!")
+                        case "PWR_ON":
+                            GPIO.output(23, GPIO.LOW)
+                            self.send_messages("PWR Turn-ON OK!")
                     # <---- -------------------------------------- ---->
                         case _:
                             print("Unexpected response.")
@@ -301,7 +309,7 @@ class CameraClient:
         self.release_camera()
 
 if __name__ == "__main__":
-    ser = serial.Serial('COM6', baudrate=57600, timeout=1)
+    ser = serial.Serial('/dev/serial0', baudrate=57600, timeout=1)
     server_ip = '192.168.1.5'
     camera_port = 8000
     message_port = 1234

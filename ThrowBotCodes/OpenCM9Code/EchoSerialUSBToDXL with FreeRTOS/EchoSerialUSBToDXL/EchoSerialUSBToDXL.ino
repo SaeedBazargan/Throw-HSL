@@ -25,6 +25,7 @@ Dynamixel Dxl(DXL_BUS_SERIAL1);
 
 void setup() 
 {
+  Serial2.begin(57600);
   Dxl.begin(3);
   pinMode(LED_PIN, OUTPUT);
   pinMode(PWR_PIN, OUTPUT);  
@@ -46,9 +47,9 @@ void startTask1(void* parameters)
   
   while (1)
   {
-    if (SerialUSB.available())
+    if (Serial2.available())
     {
-      recData[counterOfRecData++] = SerialUSB.read();
+      recData[counterOfRecData++] = Serial2.read();
       
       if (counterOfRecData >= (recData[3] + 4))
       {
@@ -56,7 +57,7 @@ void startTask1(void* parameters)
         {
           if (xQueueSend(Queue_1, (void*)recData, 0) != pdTRUE)
           {
-            SerialUSB.println("Queue Full!");
+            Serial2.println("Queue Full!");
           }
           memset(recData, 0, lengthOfRecData);
           counterOfRecData = 0;

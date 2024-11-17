@@ -28,7 +28,7 @@ namespace ThrowBot_GUI
             serverIP = server_Configs.DisplayServerIP_Port();
             server_Configs.Start();
 
-            joystick_Configs = new JoystickConfig(cancellationTokenSource, SendMessage, PresentSpeed1_label, PresentSpeed2_label, GrayEn_label, LED1_label, LED2_label);
+            joystick_Configs = new JoystickConfig(cancellationTokenSource, SendMessage, PresentSpeed1_label, PresentSpeed2_label, GrayEn_label, LED1_label, LED2_label, LowPower_label);
             joystick_Configs.Initialize();
 
             camera_Configs = new CameraConfig(Main_pictureBox, cameraPort, serverIP, cancellationTokenSource);
